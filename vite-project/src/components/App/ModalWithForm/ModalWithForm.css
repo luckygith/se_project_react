@@ -68,6 +68,7 @@
   border: none;
   border-bottom: solid #000000 1px;
   width: 440px;
+  width: 100%;
   margin: 8px 0 4px;
 }
 
@@ -84,4 +85,11 @@
 
 .modal__label_type_radio {
   margin-bottom: 8px;
+}
+
+@media screen and (max-width: 375px) {
+  .modal__content {
+    width: 343px;
+    height: 463px;
+  }
 }

@@ -18,6 +18,5 @@
 
 @media screen and (max-width: 375px) {
   .cards__list {
-    gap: 15px;
   }
 }

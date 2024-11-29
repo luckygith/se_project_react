@@ -1,10 +1,26 @@
 .page {
   background-color: #f3f3f3;
   padding: 0;
+  width: 100vw;
+  height: auto;
+  overflow-x: hidden;
 }
 
 .page__content {
-  max-width: 1360px;
+  /* max-width: 1360px; */
+  height: auto;
   margin: 0 auto;
   padding: 0 20px;
+  min-width: 375px;
+}
+
+@media screen and (max-width: 700px) {
+  .page {
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .page {
+    min-width: 375px;
+  }
 }
