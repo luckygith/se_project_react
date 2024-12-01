@@ -37,7 +37,6 @@ function App({ children }) {
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
-
         setWeatherData(filteredData);
         console.log(filteredData);
       })
