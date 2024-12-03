@@ -16,7 +16,11 @@ function App({ children }) {
     type: "",
     temp: { F: 999 },
     city: "",
+    isDay: true,
+    condition: "",
   });
+
+  console.log(weatherData);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 

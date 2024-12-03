@@ -4,7 +4,6 @@ export const defaultClothingItems = [
     name: "Cap",
     weather: "hot",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Cap.png?etag=f3dad389b22909cafa73cff9f9a3d591",
-  
   },
   {
     _id: 1,
@@ -43,68 +42,78 @@ export const coordinates = {
   longitude: -79.344994,
 };
 
+// The condition 1672531200000 < 1672550400000 && 1672550400000 < 1672574400000 evaluates to true. So function will return true indicating it's daytime.
+
 export const APIkey = "dab3492a0317ae76515fb07b629cef23";
 
 export const weatherOptions = [
   {
     day: true,
     condition: "clear",
-    url: new URL("../assets/day/clear.svg"), import.meta.href,
-   
+    url: new URL("../assets/day/clear.svg", import.meta.url).href,
   },
   {
     day: true,
-    condition: "cloudy",
-    url: new URL("../assets/day/cloudy.svg"), import.meta.href,
-  } 
+    condition: "clouds",
+    url: new URL("../assets/day/cloudy.svg", import.meta.url).href,
+  },
   {
     day: true,
     condition: "fog",
-    url: new URL("../assets/day/fog.svg"), import.meta.href,
-  } 
+    url: new URL("../assets/day/fog.svg", import.meta.url).href,
+  },
   {
     day: true,
     condition: "rain",
-    url: new URL("../assets/day/rain.svg"), import.meta.href,
-  } 
+    url: new URL("../assets/day/rain.svg", import.meta.url).href,
+  },
   {
     day: true,
     condition: "snow",
-    url: new URL("../assets/day/snow.svg"), import.meta.href,
-  } 
+    url: new URL("../assets/day/snow.svg", import.meta.url).href,
+  },
   {
     day: true,
     condition: "storm",
-    url: new URL("../assets/day/storm.svg"), import.meta.href,
-  }
-  {
-    day: false,
-    condition: "night-clear",
-    url: new URL("../assets/night/night-clear.svg"), import.meta.href,
+    url: new URL("../assets/day/storm.svg", import.meta.url).href,
   },
   {
     day: false,
-    condition: "night-cloudy",
-    url: new URL("../assets/night/night-cloudy.svg"), import.meta.href,
-  } 
+    condition: "clear",
+    url: new URL("../assets/night/night-clear.svg", import.meta.url).href,
+  },
   {
     day: false,
-    condition: "night-fog",
-    url: new URL("../assets/night/night-fog.svg"), import.meta.href,
-  } 
+    condition: "clouds",
+    url: new URL("../assets/night/night-cloudy.svg", import.meta.url).href,
+  },
   {
     day: false,
-    condition: "night-rain",
-    url: new URL("../assets/night/night-rain.svg"), import.meta.href,
-  } 
+    condition: "fog",
+    url: new URL("../assets/night/night-fog.svg", import.meta.url).href,
+  },
   {
     day: false,
-    condition: "night-snow",
-    url: new URL("../assets/night/night-snow.svg"), import.meta.href,
-  } 
+    condition: "rain",
+    url: new URL("../assets/night/night-rain.svg", import.meta.url).href,
+  },
   {
     day: false,
-    condition: "night-storm",
-    url: new URL("../assets/night/night-storm.svg"), import.meta.href,
-  }
+    condition: "snow",
+    url: new URL("../assets/night/night-snow.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "storm",
+    url: new URL("../assets/night/night-storm.svg", import.meta.url).href,
+  },
 ];
+
+export const defaultWeatherOptions = {
+  day: {
+    url: new URL("../assets/day/default.svg", import.meta.url).href,
+  },
+  night: {
+    url: new URL("../assets/night/default.svg", import.meta.url).href,
+  },
+};
