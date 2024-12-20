@@ -74,7 +74,7 @@ function App({ children }) {
           <input
             type="text"
             className="modal__input"
-            id="ImageUrl"
+            id="imageUrl"
             placeholder="Image URL"
           />
         </label>
