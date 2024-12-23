@@ -8,6 +8,10 @@
   line-height: 24px;
 }
 
+.header__toggle {
+  margin-left: auto;
+}
+
 .header__logo {
   margin-right: 24px;
 }
@@ -19,6 +23,7 @@
 .header__user-container {
   display: flex;
   align-items: center;
+
   margin: 8px 0 7px 0;
   gap: 12px;
 }
@@ -28,8 +33,7 @@
 }
 
 .header__add-clothes-button {
-  margin-left: auto;
-  margin: 0 20px 0 auto;
+  margin: 0 20px 0;
   border: none;
 }
 
