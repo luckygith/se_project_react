@@ -8,7 +8,8 @@ import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
-
+import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
+IMPO;
 //   const [count, setCount] = useState(0)
 
 function App({ children }) {
@@ -23,6 +24,7 @@ function App({ children }) {
   console.log(weatherData);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
+  const [currentTempUnit, setCurrentTempUnit] = useState("F");
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -37,6 +39,8 @@ function App({ children }) {
     setSelectedCard(card);
   };
 
+  const handleToggleSwitchChange = () => {};
+
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -49,6 +53,9 @@ function App({ children }) {
 
   return (
     <div className="page">
+      <CurrentTempUnitContext.Provider
+        value={{ currentTempUnit, handleToggleSwitchChange }}
+      />
       <div className="page__content">
         <Header handleAddClick={handleAddClick} weatherData={weatherData} />
         <Main weatherData={weatherData} handleCardClick={handleCardClick} />
@@ -121,6 +128,7 @@ function App({ children }) {
         handleCloseClick={closeActiveModal}
       />
       <Footer />
+      <CurrentTempUnitContext.Provider />
     </div>
   );
 }
