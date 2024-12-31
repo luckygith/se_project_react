@@ -10,6 +10,8 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../../AddItemModal/AddItemModal";
+import Profile from "../Profile/Profile";
+
 //   const [count, setCount] = useState(0)
 
 function App({ children }) {
@@ -101,7 +103,7 @@ function App({ children }) {
                 />
               }
             />
-            <Route path="/profile" element={<p>PROFILE</p>} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<p>PAGE NOT FOUND</p>} />
           </Routes>
           <Footer />
