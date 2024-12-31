@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
-import ModalWithForm from "./ModalWithForm/ModalWithForm";
 import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
@@ -11,8 +10,6 @@ import { coordinates, APIkey } from "../../utils/constants";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
-
-//   const [count, setCount] = useState(0)
 
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
@@ -34,19 +31,21 @@ function App({ children }) {
     console.log("HANDLEADDCLICK CONST");
   };
 
-  useEffect(() => {
-    console.log("Active Modal:", activeModal);
-  }, []);
-
   const handleCloseModal = () => {
     setActiveModal("");
     console.log("HANDLE COSE MODAL BUTTON ON");
   };
 
   const handleCardClick = (card) => {
-    setActiveModal("preview");
     setSelectedCard(card);
+    setActiveModal("preview");
+    console.log("HandleCardClick");
+    console.log(card);
   };
+
+  useEffect(() => {
+    console.log("Active Modal:", activeModal);
+  }, [activeModal]);
 
   const handleToggleSwitchChange = (e) => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
@@ -54,7 +53,6 @@ function App({ children }) {
 
   const onAddItem = (e, values) => {
     e.preventDefault();
-    console.log(e.target);
     console.log("ONADD ITEM ON");
     console.log(values);
   };
@@ -103,32 +101,31 @@ function App({ children }) {
                 />
               }
             />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={<Profile handleCardClick={handleCardClick} />}
+            />
             <Route path="*" element={<p>PAGE NOT FOUND</p>} />
           </Routes>
           <Footer />
         </div>
 
-        <ItemModal
-          activeModal={activeModal}
-          card={selectedCard}
-          handleCloseModal={handleCloseModal}
-        />
         {activeModal === "add-garment" && (
           <AddItemModal
-            handleCloseModal={handleCloseModal}
             isOpen={activeModal === "add-garment"}
             onAddItem={onAddItem}
+            handleCloseModal={handleCloseModal}
           />
         )}
 
-        {/* {activeModal === "preview" && (
-          <AddItemModal
-            isOpen={active === "add-preview"}
-            onClose={handleCloseModal}
-            onAddItem={onAddItem}
+        {activeModal === "preview" && (
+          <ItemModal
+            isOpen={activeModal === "preview"}
+            card={selectedCard}
+            handleCloseModal={handleCloseModal}
+            onClick={handleCardClick}
           />
-        )} */}
+        )}
       </CurrentTempUnitContext.Provider>
     </div>
   );

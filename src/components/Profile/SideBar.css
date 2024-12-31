@@ -1,0 +1,10 @@
+.sidebar {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar__avatar {
+  margin-right: 16px;
+}
+.sidebar__username {
+}

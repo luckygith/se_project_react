@@ -1,0 +1,22 @@
+.clothes-section {
+}
+
+.clothes-section__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.clothes-section__title {
+  margin-right: 20px;
+  padding: 0 auto;
+}
+
+.clothes-section__items {
+}
+
+.clothes-section__add-clothes-button {
+  border: none;
+  opacity: 60%;
+  margin: none;
+  padding: 0;
+}
