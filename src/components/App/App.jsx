@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
@@ -8,8 +8,8 @@ import ItemModal from "./ItemModal/ItemModal";
 import Footer from "./Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
-import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
-IMPO;
+import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
+import AddItemModal from "../../AddItemModal/AddItemModal";
 //   const [count, setCount] = useState(0)
 
 function App({ children }) {
@@ -21,17 +21,24 @@ function App({ children }) {
     condition: "",
   });
 
-  console.log(weatherData);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
-  const [currentTempUnit, setCurrentTempUnit] = useState("F");
+  const [currentTempUnit, setCurrentTempUnit] = useState("C");
 
-  const handleAddClick = () => {
+  const handleAddClick = (e) => {
+    e.preventDefault();
     setActiveModal("add-garment");
+    console.log(e.target);
+    console.log("HANDLEADDCLICK CONST");
   };
 
-  const closeActiveModal = () => {
+  useEffect(() => {
+    console.log("Active Modal:", activeModal);
+  }, []);
+
+  const handleCloseModal = () => {
     setActiveModal("");
+    console.log("HANDLE COSE MODAL BUTTON ON");
   };
 
   const handleCardClick = (card) => {
@@ -39,14 +46,30 @@ function App({ children }) {
     setSelectedCard(card);
   };
 
-  const handleToggleSwitchChange = () => {};
+  const handleToggleSwitchChange = (e) => {
+    currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
+  };
+
+  const onAddItem = (e, values) => {
+    e.preventDefault();
+    console.log(e.target);
+    console.log("ONADD ITEM ON");
+    console.log(values);
+  };
+
+  //   {
+  //   if (currentTempUnit === "C") setCurrentTempUnit("F");
+  //   if (currentTempUnit === "F") setCurrentTempUnit("C");
+  //   console.log(currentTempUnit);
+  // };
 
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
-        console.log(filteredData);
+        // console.log(filteredData.temp);
+        console.log("useEFFECTWORKING");
       })
       .catch(console.error);
   }, []);
@@ -55,80 +78,46 @@ function App({ children }) {
     <div className="page">
       <CurrentTempUnitContext.Provider
         value={{ currentTempUnit, handleToggleSwitchChange }}
-      />
-      <div className="page__content">
-        <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-        <Main weatherData={weatherData} handleCardClick={handleCardClick} />
-      </div>
-      <ModalWithForm
-        title="New Garment"
-        buttonText="Add Garment"
-        activeModal={activeModal}
-        isOpen={activeModal === "add-garment"}
-        handleCloseClick={closeActiveModal}
       >
-        <label htmlFor="name" className="modal__label">
-          Name{" "}
-          <input
-            type="text"
-            className="modal__input"
-            id="name"
-            placeholder="Name"
+        <div className="page__content">
+          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Routes>
+            <Route
+              path="/main"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
+            <Route path="/profile" element={<p>PROFILE</p>} />
+          </Routes>
+          {/* <Main weatherData={weatherData} handleCardClick={handleCardClick} /> */}
+          <Footer />
+        </div>
+
+        <ItemModal
+          activeModal={activeModal}
+          card={selectedCard}
+          handleCloseModal={handleCloseModal}
+        />
+        {activeModal === "add-garment" && (
+          <AddItemModal
+            handleCloseModal={handleCloseModal}
+            isOpen={activeModal === "add-garment"}
+            onAddItem={onAddItem}
           />
-        </label>
-        <label htmlFor="imageUrl" className="modal__label">
-          Image{" "}
-          <input
-            type="text"
-            className="modal__input"
-            id="imageUrl"
-            placeholder="Image URL"
+        )}
+
+        {/* {activeModal === "preview" && (
+          <AddItemModal
+            isOpen={active === "add-preview"}
+            onClose={handleCloseModal}
+            onAddItem={onAddItem}
           />
-        </label>
-        <fieldset className="modal__radio-buttons">
-          <legend className="modal__legend">Select the weather type:</legend>
-          <label htmlFor="hot" className="modal__label modal__label_type_radio">
-            <input
-              id="hot"
-              type="radio"
-              name="modal__radio-input"
-              className="modal__radio-input"
-            />
-            Hot
-          </label>
-          <label
-            htmlFor="warm"
-            className="modal__label modal__label_type_radio"
-          >
-            <input
-              id="warm"
-              type="radio"
-              name="modal__radio-input"
-              className="modal__radio-input"
-            />
-            Warm
-          </label>
-          <label
-            htmlFor="cold"
-            className="modal__label modal__label_type_radio"
-          >
-            <input
-              id="cold"
-              type="radio"
-              name="modal__radio-input"
-              className="modal__radio-input"
-            />
-            Cold
-          </label>
-        </fieldset>
-      </ModalWithForm>
-      <ItemModal
-        activeModal={activeModal}
-        card={selectedCard}
-        handleCloseClick={closeActiveModal}
-      />
-      <Footer />
-      <CurrentTempUnitContext.Provider />
+        )} */}
+      </CurrentTempUnitContext.Provider>
     </div>
   );
 }

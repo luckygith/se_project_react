@@ -3,10 +3,10 @@ import "./ModalWithForm.css";
 function ModalWithForm({
   children,
   title,
-  buttonText,
+  buttonText = "Add Garment",
   isOpen,
-  activeModal,
-  handleCloseClick,
+  handleCloseModal,
+  onSubmit,
 }) {
   return (
     <div
@@ -16,13 +16,15 @@ function ModalWithForm({
       <div className="modal__content">
         <h3 className="modal__title">{title}</h3>
         <button
-          onClick={handleCloseClick}
+          onClick={handleCloseModal}
           type="button"
           className="modal__close"
         ></button>
-        <form action="" className="modal__form">
+        <form onSubmit={onSubmit} className="modal__form">
           {children}
-          <button className="modal__form-submit">{buttonText}</button>
+          <button type="submit" className="modal__form-submit">
+            {buttonText}
+          </button>
         </form>
       </div>
     </div>
