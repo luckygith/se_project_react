@@ -81,7 +81,17 @@ function App({ children }) {
       >
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+
           <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
             <Route
               path="/main"
               element={
@@ -92,8 +102,8 @@ function App({ children }) {
               }
             />
             <Route path="/profile" element={<p>PROFILE</p>} />
+            <Route path="*" element={<p>PAGE NOT FOUND</p>} />
           </Routes>
-          {/* <Main weatherData={weatherData} handleCardClick={handleCardClick} /> */}
           <Footer />
         </div>
 
