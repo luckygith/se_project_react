@@ -1,5 +1,5 @@
 import WeatherCard from "./WeatherCard/WeatherCard";
-import { defaultClothingItems } from "../../../utils/constants";
+import { clothingItems } from "../../../utils/clothingItems";
 import ItemCard from "./ItemCard/ItemCard";
 import "./Main.css";
 import { useContext } from "react";
@@ -19,11 +19,8 @@ function Main({ weatherData, handleCardClick }) {
         </p>
         {/* {weatherData.temp.F} &deg; */}
         <ul className="cards__list">
-          {defaultClothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((item) => {
+          {clothingItems.map((item) => {
+            if (item.weather === weatherData.type)
               return (
                 <ItemCard
                   key={item._id}
@@ -31,7 +28,7 @@ function Main({ weatherData, handleCardClick }) {
                   onCardClick={handleCardClick}
                 />
               );
-            })}
+          })}
         </ul>
       </section>
     </main>

@@ -11,6 +11,12 @@ import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 
+import {
+  getClothingItems,
+  addClothingItem,
+  deleteClothingItem,
+} from "../../utils/api";
+
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -23,6 +29,48 @@ function App({ children }) {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("C");
+  const [clothingItems, setClothingItems] = useState([]);
+  const [newItem, setNewItem] = useState({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
+
+  useEffect(() => {
+    getClothingItems()
+      .then((data) => {
+        setClothingItems(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching items: ", error);
+      });
+  }, []);
+
+  const handleAddItem = () => {
+    if (newItem.name && newItem.imageUrl && newItem.weather) {
+      addClothingItem(newItem.name, newItem.imageUrl, newItem.weather)
+        .then((addedItem) => {
+          setClothingItems([...clothingItems, addedItem]); // Spread... creates a shallow copy of array for addedItem to be appended to
+          setNewItem({ name: "", imageUrl: "", weather: "" }); // Resets form!
+        })
+        .catch((error) => {
+          console.error("Error adding item: ", error);
+        });
+    }
+  };
+
+  const handleDeleteItem = (_id) => {
+    deleteClothingItem(_id)
+      .then(() => {
+        setClothingItems((clothingItems) =>
+          clothingItems.filter((item) => item._id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting item: ", error);
+      });
+  };
 
   const handleAddClick = (e) => {
     e.preventDefault();
@@ -53,7 +101,7 @@ function App({ children }) {
 
   const onAddItem = (e, values) => {
     e.preventDefault();
-    console.log("ONADD ITEM ON");
+    console.log("ONADD ITEM ONNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
     console.log(values);
   };
 
@@ -74,13 +122,27 @@ function App({ children }) {
       .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    getClothingItems()
+      .then((data) => {
+        console.log(data);
+        setClothingItems(data);
+        console.log(data);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="page">
       <CurrentTempUnitContext.Provider
         value={{ currentTempUnit, handleToggleSwitchChange }}
       >
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            handleAddClick={handleAddClick}
+            onAddItem={handleAddItem}
+            weatherData={weatherData}
+          />
 
           <Routes>
             <Route
@@ -98,6 +160,7 @@ function App({ children }) {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
@@ -115,6 +178,9 @@ function App({ children }) {
             isOpen={activeModal === "add-garment"}
             onAddItem={onAddItem}
             handleCloseModal={handleCloseModal}
+            newItem={newItem}
+            setNewItem={setNewItem}
+            handleAddItem={handleAddItem}
           />
         )}
 
@@ -123,7 +189,8 @@ function App({ children }) {
             isOpen={activeModal === "preview"}
             card={selectedCard}
             handleCloseModal={handleCloseModal}
-            onClick={handleCardClick}
+            handleCardClick={handleCardClick}
+            handleDeleteItem={handleDeleteItem}
           />
         )}
       </CurrentTempUnitContext.Provider>

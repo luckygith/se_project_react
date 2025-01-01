@@ -16,9 +16,25 @@
   margin: 0;
 }
 .modal__footer {
+  display: flex;
   font-family: "CabinetGrotesk-Bold";
-  padding: 32px;
+  padding: 20px 32px 32px 32px;
   margin: 0;
+  flex-direction: row;
+  line-height: 24px;
+  font-size: 20px;
+  justify-content: space-between;
+}
+.modal__footer-detail {
+}
+.modal__delete-button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+  background-color: white;
+  display: flex;
+  align-items: start;
 }
 
 .modal__caption {

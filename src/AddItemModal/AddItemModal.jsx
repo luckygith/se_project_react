@@ -5,8 +5,8 @@ const AddItemModal = ({
   handleCloseModal,
   handleAddClick,
   onAddItem,
-  activeModal,
   isOpen,
+  handleAddItem,
 }) => {
   const [name, setName] = useState("");
   const handleNameChange = (e) => {
