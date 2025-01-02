@@ -7,8 +7,6 @@ function ModalWithForm({
   isOpen,
   handleCloseModal,
   onSubmit,
-  onAddItem,
-  handleAddItem,
 }) {
   return (
     <div
@@ -23,13 +21,9 @@ function ModalWithForm({
         ></button>
         <div className="modal__form-container">
           <h3 className="modal__title">{title}</h3>
-          <form className="modal__form">
+          <form className="modal__form" onSubmit={onSubmit}>
             {children}
-            <button
-              type="submit"
-              onClick={onAddItem}
-              className="modal__form-submit"
-            >
+            <button type="submit" className="modal__form-submit">
               {buttonText}
             </button>
           </form>

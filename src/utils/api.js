@@ -1,13 +1,13 @@
 const baseUrl = "http://localhost:3001";
 
-function getClothingItems() {
+export function getClothingItems() {
   return fetch(`${baseUrl}/items`).then((res) => {
     console.log("get clothing api");
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
 }
 
-function addClothingItem(name, imageUrl, weather) {
+export function addClothingItem(name, imageUrl, weather) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -15,12 +15,12 @@ function addClothingItem(name, imageUrl, weather) {
     },
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then((res) => {
-    console.log("add clothing api");
+    console.log("add clothing apiiiiiiiiiiiii");
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
 }
 
-function deleteClothingItem(_id) {
+export function deleteClothingItem(_id) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
   }).then((res) => {
@@ -29,4 +29,4 @@ function deleteClothingItem(_id) {
   });
 }
 
-export { getClothingItems, addClothingItem, deleteClothingItem };
+export const api = { getClothingItems, addClothingItem, deleteClothingItem };

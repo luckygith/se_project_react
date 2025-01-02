@@ -4,7 +4,6 @@ import ModalWithForm from "../components/App/ModalWithForm/ModalWithForm";
 const AddItemModal = ({
   handleCloseModal,
   handleAddClick,
-  onAddItem,
   isOpen,
   handleAddItem,
 }) => {
@@ -27,8 +26,11 @@ const AddItemModal = ({
   };
 
   const handleSubmit = (e) => {
+    debugger;
     e.preventDefault();
-    onAddItem(e, { name, image, weatherType });
+
+    console.log({ name, image, weatherType });
+    handleAddItem({ name, imageUrl: image, weather: weatherType });
     handleCloseModal();
   };
 
@@ -68,7 +70,7 @@ const AddItemModal = ({
           <input
             id="hot"
             type="radio"
-            name="modal__radio-input"
+            name="weather"
             className="modal__radio-input"
             value="hot"
             onChange={handleWeatherTypeChange}
@@ -79,7 +81,7 @@ const AddItemModal = ({
           <input
             id="warm"
             type="radio"
-            name="modal__radio-input"
+            name="weather"
             className="modal__radio-input"
             value="warm"
             onChange={handleWeatherTypeChange}
@@ -90,7 +92,7 @@ const AddItemModal = ({
           <input
             id="cold"
             type="radio"
-            name="modal__radio-input"
+            name="weather"
             className="modal__radio-input"
             value="cold"
             onChange={handleWeatherTypeChange}

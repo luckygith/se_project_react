@@ -17,6 +17,8 @@ import {
   deleteClothingItem,
 } from "../../utils/api";
 
+import { api } from "../../utils/api";
+
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
     type: "",
@@ -37,7 +39,8 @@ function App({ children }) {
   });
 
   useEffect(() => {
-    getClothingItems()
+    api
+      .getClothingItems()
       .then((data) => {
         setClothingItems(data);
         console.log(data);
@@ -47,21 +50,25 @@ function App({ children }) {
       });
   }, []);
 
-  const handleAddItem = () => {
-    if (newItem.name && newItem.imageUrl && newItem.weather) {
-      addClothingItem(newItem.name, newItem.imageUrl, newItem.weather)
-        .then((addedItem) => {
-          setClothingItems([...clothingItems, addedItem]); // Spread... creates a shallow copy of array for addedItem to be appended to
-          setNewItem({ name: "", imageUrl: "", weather: "" }); // Resets form!
-        })
-        .catch((error) => {
-          console.error("Error adding item: ", error);
-        });
-    }
+  const handleAddItem = (item) => {
+    console.log(item.name, item.imageUrl, item.weather);
+    api
+      .addClothingItem(item.name, item.imageUrl, item.weather)
+      .then((result) => {
+        console.log(result);
+        console.log(item.name, item.imageUrl, item.weather);
+        setNewItem(item.name, item.imageUrl, item.weather); // Spread... creates a shallow copy of array for addedItem to be appended to
+        // setNewItem({ name: "", imageUrl: "", weather: "" }); // Resets form!
+        console.log("addClothingItemAPI success");
+      })
+      .catch((error) => {
+        console.error("Error adding item: ", error);
+      });
   };
 
   const handleDeleteItem = (_id) => {
-    deleteClothingItem(_id)
+    api
+      .deleteClothingItem(_id)
       .then(() => {
         setClothingItems((clothingItems) =>
           clothingItems.filter((item) => item._id !== id)
@@ -101,7 +108,7 @@ function App({ children }) {
 
   const onAddItem = (e, values) => {
     e.preventDefault();
-    console.log("ONADD ITEM ONNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+    console.log("ON ADD ITEM ON");
     console.log(values);
   };
 
@@ -117,7 +124,7 @@ function App({ children }) {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
         // console.log(filteredData.temp);
-        console.log("useEFFECTWORKING");
+        console.log("use effecting success");
       })
       .catch(console.error);
   }, []);
@@ -161,12 +168,19 @@ function App({ children }) {
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
                 />
               }
             />
             <Route
               path="/profile"
-              element={<Profile handleCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  handleCardClick={handleCardClick}
+                  handleAddClick={handleAddClick}
+                  clothingItems={clothingItems}
+                />
+              }
             />
             <Route path="*" element={<p>PAGE NOT FOUND</p>} />
           </Routes>
