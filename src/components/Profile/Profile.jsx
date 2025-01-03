@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import "../Profile/Profile.css";
 
 function Profile({ handleCardClick, handleAddClick, clothingItems }) {
+  console.log(clothingItems);
   return (
     <div className="profile">
       <section className="profile__sidebar">

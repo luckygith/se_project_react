@@ -10,6 +10,7 @@ import { coordinates, APIkey } from "../../utils/constants";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 import AddItemModal from "../../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
+import { clothingItems } from "../../utils/clothingItems";
 
 import {
   getClothingItems,
@@ -36,7 +37,9 @@ function App({ children }) {
     name: "",
     imageUrl: "",
     weather: "",
+    id: "",
   });
+  console.log(clothingItems);
 
   useEffect(() => {
     api
@@ -50,14 +53,26 @@ function App({ children }) {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("Selected Card updated:", selectedCard);
+  }, [selectedCard]);
+
+  useEffect(() => {
+    console.log("Clothing Items updated:", clothingItems);
+  }, [clothingItems]);
+
   const handleAddItem = (item) => {
-    console.log(item.name, item.imageUrl, item.weather);
+    console.log(item.name, item.imageUrl, item.weatherType);
+    debugger;
     api
-      .addClothingItem(item.name, item.imageUrl, item.weather)
+      .addClothingItem(item.name, item.imageUrl, item.weatherType)
       .then((result) => {
         console.log(result);
-        console.log(item.name, item.imageUrl, item.weather);
-        setNewItem(item.name, item.imageUrl, item.weather); // Spread... creates a shallow copy of array for addedItem to be appended to
+        console.log(item);
+        console.log(item.name, item.image, item.weatherType); //incorrect
+        console.log(item.name, item.imageUrl, item.weather); //correct
+
+        setNewItem(item.name, item.imageUrl, item.weatherType); // Spread... creates a shallow copy of array for addedItem to be appended to
         // setNewItem({ name: "", imageUrl: "", weather: "" }); // Resets form!
         console.log("addClothingItemAPI success");
       })
@@ -66,13 +81,27 @@ function App({ children }) {
       });
   };
 
+  // const handleAddItem = (item) => {
+  //   debugger;
+  //   api
+  //     .addClothingItem(item)
+  //     .then((item) => {
+  //       console.log(item);
+  //       setClothingItems([item, ...clothingItems]);
+  //       handleCloseModal();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   const handleDeleteItem = (_id) => {
     api
       .deleteClothingItem(_id)
       .then(() => {
+        console.log(_id);
         setClothingItems((clothingItems) =>
-          clothingItems.filter((item) => item._id !== id)
+          clothingItems.filter((item) => item._id !== _id)
         );
+        handleCloseModal();
       })
       .catch((error) => {
         console.error("Error deleting item: ", error);
@@ -98,9 +127,13 @@ function App({ children }) {
     console.log(card);
   };
 
-  useEffect(() => {
-    console.log("Active Modal:", activeModal);
-  }, [activeModal]);
+  useEffect(
+    (card) => {
+      console.log("Active Modal:", activeModal);
+      console.log(card);
+    },
+    [activeModal]
+  );
 
   const handleToggleSwitchChange = (e) => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
@@ -129,15 +162,15 @@ function App({ children }) {
       .catch(console.error);
   }, []);
 
-  useEffect(() => {
-    getClothingItems()
-      .then((data) => {
-        console.log(data);
-        setClothingItems(data);
-        console.log(data);
-      })
-      .catch(console.error);
-  }, []);
+  // useEffect(() => {
+  //   getClothingItems()
+  //     .then((data) => {
+  //       console.log(data);
+  //       setClothingItems(data);
+  //       console.log(data);
+  //     })
+  //     .catch(console.error);
+  // }, []);
 
   return (
     <div className="page">
@@ -147,7 +180,7 @@ function App({ children }) {
         <div className="page__content">
           <Header
             handleAddClick={handleAddClick}
-            onAddItem={handleAddItem}
+            handleAddItem={handleAddItem}
             weatherData={weatherData}
           />
 
@@ -158,6 +191,7 @@ function App({ children }) {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
@@ -176,6 +210,7 @@ function App({ children }) {
               path="/profile"
               element={
                 <Profile
+                  weatherData={weatherData}
                   handleCardClick={handleCardClick}
                   handleAddClick={handleAddClick}
                   clothingItems={clothingItems}

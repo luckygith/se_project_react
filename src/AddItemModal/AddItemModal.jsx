@@ -29,8 +29,9 @@ const AddItemModal = ({
     debugger;
     e.preventDefault();
 
-    console.log({ name, image, weatherType });
-    handleAddItem({ name, imageUrl: image, weather: weatherType });
+    console.log({ name, imageUrl: image, weatherType });
+
+    handleAddItem({ name, imageUrl: image, weatherType });
     handleCloseModal();
   };
 

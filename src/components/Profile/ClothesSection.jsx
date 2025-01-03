@@ -2,7 +2,12 @@ import "../Profile/ClothesSection.css";
 import ItemCard from "../App/Main/ItemCard/ItemCard";
 import { clothingItems } from "../../utils/clothingItems";
 
-function ClothesSection({ handleCardClick, handleAddClick, clothingItems }) {
+function ClothesSection({
+  clothingItems,
+  handleCardClick,
+  handleAddClick,
+  selectedCard,
+}) {
   return (
     <div className="clothes-section">
       <div className="clothes-section__container">
@@ -17,18 +22,30 @@ function ClothesSection({ handleCardClick, handleAddClick, clothingItems }) {
       </div>
 
       <ul className="cards__list">
-        {clothingItems.map((item) => {
-          return (
+        {clothingItems.map(
+          (item) => (
+            // return (
             <ItemCard
-              key={item._id}
               item={item}
-              onCardClick={handleCardClick}
+              // onClick={() => handleCardClick(item)}
+              key={item._id}
+              handleCardClick={handleCardClick}
+              // card={selectedCard}
             />
-          );
-        })}
+          )
+          // );
+        )}
       </ul>
     </div>
   );
 }
 
 export default ClothesSection;
+
+// {clothingItems.map((item) => (
+//   <ItemCard
+//     key={item._id} // Add a unique key for each item
+//     item={item}
+//     handleCardClick={handleCardClick}
+//   />
+// ))}

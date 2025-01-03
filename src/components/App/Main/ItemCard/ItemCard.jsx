@@ -7,14 +7,14 @@ function ItemCard({ item, handleCardClick }) {
   //   setSelectedCard(item);
   //   setActiveModal("preview");
   // };
-
+  console.log(item);
   return (
     <li className="card">
       <h2 className="card__name">{item.name}</h2>
       <img
-        handleCardClick={handleCardClick}
+        onClick={() => handleCardClick(item)}
         className="card__image"
-        src={item.link}
+        src={item.imageUrl}
         alt={item.name}
       />
     </li>
