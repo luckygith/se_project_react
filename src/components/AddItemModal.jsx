@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ModalWithForm from "../components/App/ModalWithForm/ModalWithForm";
+import ModalWithForm from "../components/ModalWithForm";
 
 const AddItemModal = ({
   handleCloseModal,
@@ -10,27 +10,21 @@ const AddItemModal = ({
   const [name, setName] = useState("");
   const handleNameChange = (e) => {
     setName(e.target.value);
-    console.log(e.target.value);
   };
 
   const [image, setImage] = useState("");
   const handleImageChange = (e) => {
     setImage(e.target.value);
-    console.log(e.target.value);
   };
 
   const [weatherType, setWeatherType] = useState("");
   const handleWeatherTypeChange = (e) => {
     setWeatherType(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {
     debugger;
     e.preventDefault();
-
-    console.log({ name, imageUrl: image, weatherType });
-
     handleAddItem({ name, imageUrl: image, weatherType });
     handleCloseModal();
   };

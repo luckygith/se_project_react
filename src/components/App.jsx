@@ -1,24 +1,24 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import Header from "./Header/Header";
-import Main from "./Main/Main";
-import ItemModal from "./ItemModal/ItemModal";
-import Footer from "./Footer/Footer";
-import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { coordinates, APIkey } from "../../utils/constants";
-import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
-import AddItemModal from "../../AddItemModal/AddItemModal";
-import Profile from "../Profile/Profile";
-import { clothingItems } from "../../utils/clothingItems";
+import "../blocks/App.css";
+import Header from "./Header";
+import Main from "./Main";
+import ItemModal from "./ItemModal";
+import Footer from "./Footer";
+import { getWeather, filterWeatherData } from "../utils/weatherApi";
+import { coordinates, APIkey } from "../utils/constants";
+import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
+import AddItemModal from "./AddItemModal";
+import Profile from "./Profile";
+import { clothingItems } from "../utils/clothingItems";
 
 import {
   getClothingItems,
   addClothingItem,
   deleteClothingItem,
-} from "../../utils/api";
+} from "../utils/api";
 
-import { api } from "../../utils/api";
+import { api } from "../utils/api";
 
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
@@ -39,42 +39,28 @@ function App({ children }) {
     weather: "",
     id: "",
   });
-  console.log(clothingItems);
 
   useEffect(() => {
     api
       .getClothingItems()
       .then((data) => {
         setClothingItems(data);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
       });
   }, []);
 
-  useEffect(() => {
-    console.log("Selected Card updated:", selectedCard);
-  }, [selectedCard]);
+  useEffect(() => {}, [selectedCard]);
 
-  useEffect(() => {
-    console.log("Clothing Items updated:", clothingItems);
-  }, [clothingItems]);
+  useEffect(() => {}, [clothingItems]);
 
   const handleAddItem = (item) => {
-    console.log(item.name, item.imageUrl, item.weatherType);
-    debugger;
     api
       .addClothingItem(item.name, item.imageUrl, item.weatherType)
       .then((result) => {
-        console.log(result);
-        console.log(item);
-        console.log(item.name, item.image, item.weatherType); //incorrect
-        console.log(item.name, item.imageUrl, item.weather); //correct
-
         setNewItem(item.name, item.imageUrl, item.weatherType); // Spread... creates a shallow copy of array for addedItem to be appended to
         // setNewItem({ name: "", imageUrl: "", weather: "" }); // Resets form!
-        console.log("addClothingItemAPI success");
       })
       .catch((error) => {
         console.error("Error adding item: ", error);
@@ -97,7 +83,6 @@ function App({ children }) {
     api
       .deleteClothingItem(_id)
       .then(() => {
-        console.log(_id);
         setClothingItems((clothingItems) =>
           clothingItems.filter((item) => item._id !== _id)
         );
@@ -111,29 +96,24 @@ function App({ children }) {
   const handleAddClick = (e) => {
     e.preventDefault();
     setActiveModal("add-garment");
-    console.log(e.target);
-    console.log("HANDLEADDCLICK CONST");
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (e) => {
+    e.preventDefault();
     setActiveModal("");
-    console.log("HANDLE COSE MODAL BUTTON ON");
   };
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview");
-    console.log("HandleCardClick");
-    console.log(card);
   };
 
-  useEffect(
-    (card) => {
-      console.log("Active Modal:", activeModal);
-      console.log(card);
-    },
-    [activeModal]
-  );
+  // useEffect(
+  //   (item) => {
+  //     console.log(item);
+  //   },
+  //   [activeModal]
+  // );
 
   const handleToggleSwitchChange = (e) => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
@@ -141,8 +121,6 @@ function App({ children }) {
 
   const onAddItem = (e, values) => {
     e.preventDefault();
-    console.log("ON ADD ITEM ON");
-    console.log(values);
   };
 
   //   {
@@ -156,21 +134,17 @@ function App({ children }) {
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
-        // console.log(filteredData.temp);
-        console.log("use effecting success");
       })
       .catch(console.error);
   }, []);
 
-  // useEffect(() => {
-  //   getClothingItems()
-  //     .then((data) => {
-  //       console.log(data);
-  //       setClothingItems(data);
-  //       console.log(data);
-  //     })
-  //     .catch(console.error);
-  // }, []);
+  useEffect(() => {
+    getClothingItems()
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <div className="page">
@@ -196,17 +170,6 @@ function App({ children }) {
               }
             />
             <Route
-              path="/main"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                  handleAddClick={handleAddClick}
-                />
-              }
-            />
-            <Route
               path="/profile"
               element={
                 <Profile
@@ -214,6 +177,7 @@ function App({ children }) {
                   handleCardClick={handleCardClick}
                   handleAddClick={handleAddClick}
                   clothingItems={clothingItems}
+                  handleCloseModal={handleCloseModal}
                 />
               }
             />

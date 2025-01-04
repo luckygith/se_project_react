@@ -1,9 +1,14 @@
 import ClothesSection from "./ClothesSection";
 import SideBar from "./SideBar";
-import "../Profile/Profile.css";
+import "../blocks/Profile.css";
+import React from "react";
 
-function Profile({ handleCardClick, handleAddClick, clothingItems }) {
-  console.log(clothingItems);
+function Profile({
+  handleCardClick,
+  handleAddClick,
+  clothingItems,
+  handleCloseModal,
+}) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
@@ -14,6 +19,7 @@ function Profile({ handleCardClick, handleAddClick, clothingItems }) {
           handleCardClick={handleCardClick}
           handleAddClick={handleAddClick}
           clothingItems={clothingItems}
+          handleCloseModal={handleCloseModal}
         />
       </section>
     </div>

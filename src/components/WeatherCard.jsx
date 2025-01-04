@@ -1,11 +1,8 @@
-import clear from "../../../../assets/day/clear.svg";
-import "./WeatherCard.css";
-import {
-  weatherOptions,
-  defaultWeatherOptions,
-} from "../../../../utils/constants";
-import { filterWeatherData } from "../../../../utils/weatherApi";
-import { CurrentTempUnitContext } from "../../../../contexts/CurrentTempUnitContext";
+// import clear from "../../../../assets/day/clear.svg";
+import "../blocks/WeatherCard.css";
+import { weatherOptions, defaultWeatherOptions } from "../utils/constants";
+import { filterWeatherData } from "../utils/weatherApi";
+import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
 import { useContext } from "react";
 
 function WeatherCard({ weatherData }) {
@@ -18,9 +15,6 @@ function WeatherCard({ weatherData }) {
       option.condition === weatherData.condition
     );
   });
-
-  console.log(filteredOptions);
-
   let weatherOption;
 
   if (filteredOptions.length === 0) {

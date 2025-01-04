@@ -1,19 +1,12 @@
 import React, { useContext, useState } from "react";
-import "./ToggleSwitch.css";
-import { CurrentTempUnitContext } from "../../../contexts/CurrentTempUnitContext";
 
+import "../blocks/ToggleSwitch.css";
+
+import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
 const ToggleSwitch = (e) => {
   const { currentTempUnit, handleToggleSwitchChange } = useContext(
     CurrentTempUnitContext
   );
-  // [  const [currentTempUnit, handleToggleSwitchChange] = useState("C");
-
-  //   const handleChange = (e) => {
-  //     if (currentTempUnit === "C") handleToggleSwitchChange("F");
-  //     if (currentTempUnit === "F") handleToggleSwitchChange("C");
-  //     console.log(currentTempUnit);
-  //     console.log("Toggle switch button working ");
-  //   };]
 
   return (
     <label className="switch-label" htmlFor={`react-switch-new`}>

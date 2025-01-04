@@ -2,6 +2,8 @@
 
 Welcome to a project demonstration called WTWR!
 
+first phase:
+
 An application's front-end built from scratch excercising HTML, CSS, and Javascript with additonal functionality to the React front-end, serving the fundamentals of the javascript framework.
 I will also be exhibiting the core piece of the application's functionality: interaction with the weather API. Using the asynchronous fetch requests I learned in the previous sprint, I make requests to this API. The response will include location-specific weather data, which will be parsed and utilized to filter out clothing cards unsuitable for the current weather.
 
@@ -23,3 +25,14 @@ Currently, two official plugins are available:
 ![WTWR interface](image.png)
 ![add clothes popup](image-1.png)
 ![weather conditions](image-2.png)
+
+second phase:
+
+My goal for this iteration is to continue implementing functionality using the React features I have learned. I implement the following:
+
+A temperature unit toggle switch using React context
+A profile page route using React Router
+Form submission using controlled components or refs
+
+![Delete added clothes function](image-3.png)
+![Main and Profile Route cards overflow](image-4.png)

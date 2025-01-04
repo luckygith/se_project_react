@@ -1,6 +1,7 @@
-import "../Profile/ClothesSection.css";
-import ItemCard from "../App/Main/ItemCard/ItemCard";
-import { clothingItems } from "../../utils/clothingItems";
+import "../blocks/CLothesSection.css";
+import ItemCard from "./ItemCard";
+
+import React from "react";
 
 function ClothesSection({
   clothingItems,
@@ -22,9 +23,8 @@ function ClothesSection({
       </div>
 
       <ul className="cards__list">
-        {clothingItems.map(
-          (item) => (
-            // return (
+        {clothingItems.map((item) => {
+          return (
             <ItemCard
               item={item}
               // onClick={() => handleCardClick(item)}
@@ -32,9 +32,8 @@ function ClothesSection({
               handleCardClick={handleCardClick}
               // card={selectedCard}
             />
-          )
-          // );
-        )}
+          );
+        })}
       </ul>
     </div>
   );
