@@ -37,10 +37,12 @@
 
 .switch__slider-F {
   left: 2px;
+  transition: 0.2s;
 }
 
 .switch__slider-C {
   left: 29px;
+  transition: 0.2s;
 }
 
 .switch__temp-F {
