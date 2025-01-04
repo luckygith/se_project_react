@@ -1,7 +1,6 @@
-import "../blocks/ClothesSection.css";
 import ItemCard from "./ItemCard";
-
 import React from "react";
+import "../../src/blocks/ClothesSection.css";
 
 function ClothesSection({
   clothingItems,
@@ -27,10 +26,8 @@ function ClothesSection({
           return (
             <ItemCard
               item={item}
-              // onClick={() => handleCardClick(item)}
               key={item._id}
               handleCardClick={handleCardClick}
-              // card={selectedCard}
             />
           );
         })}
