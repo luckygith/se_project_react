@@ -1,6 +1,6 @@
 import ItemCard from "./ItemCard";
 import React from "react";
-import "../../src/blocks/ClothesSection.css";
+import "../blocks/ClothesSection.css";
 
 function ClothesSection({
   clothingItems,
