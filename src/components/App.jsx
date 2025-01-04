@@ -98,8 +98,7 @@ function App({ children }) {
     setActiveModal("add-garment");
   };
 
-  const handleCloseModal = (e) => {
-    e.preventDefault();
+  const handleCloseModal = () => {
     setActiveModal("");
   };
 

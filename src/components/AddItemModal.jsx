@@ -23,7 +23,6 @@ const AddItemModal = ({
   };
 
   const handleSubmit = (e) => {
-    debugger;
     e.preventDefault();
     handleAddItem({ name, imageUrl: image, weatherType });
     handleCloseModal();
