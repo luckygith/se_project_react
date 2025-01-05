@@ -1,7 +1,6 @@
 import ItemCard from "./ItemCard";
 import React from "react";
 import "../blocks/ClothesSection.css";
-import "../blocks/ClothesSection";
 
 function ClothesSection({
   clothingItems,
