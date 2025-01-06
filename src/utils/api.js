@@ -15,7 +15,6 @@ export function addClothingItem(name, imageUrl, weather, _id) {
     body: JSON.stringify({ name, imageUrl, weather }),
   }).then((res) => {
     console.log("Item clothing successfully added:", name, imageUrl, weather);
-
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });
 }

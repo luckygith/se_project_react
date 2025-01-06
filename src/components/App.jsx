@@ -14,8 +14,8 @@ import { clothingItems } from "../utils/clothingItems";
 
 import {
   getClothingItems,
-  addClothingItem,
-  deleteClothingItem,
+  addClothingItem, //called Line 60?
+  deleteClothingItem, //called Line 83?
 } from "../utils/api";
 
 import { api } from "../utils/api";
@@ -56,28 +56,17 @@ function App({ children }) {
   useEffect(() => {}, [clothingItems]);
 
   const handleAddItem = (item) => {
+    debugger;
     api
       .addClothingItem(item.name, item.imageUrl, item.weatherType)
-      .then((result) => {
+      .then((item) => {
         setNewItem(item.name, item.imageUrl, item.weatherType); // Spread... creates a shallow copy of array for addedItem to be appended to
-        // setNewItem({ name: "", imageUrl: "", weather: "" }); // Resets form!
+        setClothingItems([item, ...clothingItems]);
       })
       .catch((error) => {
         console.error("Error adding item: ", error);
       });
   };
-
-  // const handleAddItem = (item) => {
-  //   debugger;
-  //   api
-  //     .addClothingItem(item)
-  //     .then((item) => {
-  //       console.log(item);
-  //       setClothingItems([item, ...clothingItems]);
-  //       handleCloseModal();
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   const handleDeleteItem = (_id) => {
     api
