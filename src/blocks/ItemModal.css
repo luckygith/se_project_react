@@ -11,9 +11,9 @@
   height: 498px;
   width: 100%;
   display: block;
-
   padding: 0;
   margin: 0;
+  object-fit: scale-down;
 }
 .modal__footer {
   display: flex;

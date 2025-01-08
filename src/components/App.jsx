@@ -51,21 +51,15 @@ function App({ children }) {
       });
   }, []);
 
-  useEffect(() => {}, [selectedCard]);
-
-  useEffect(() => {}, [clothingItems]);
-
   const handleAddItem = (item) => {
-    debugger;
     api
       .addClothingItem(item.name, item.imageUrl, item.weatherType)
       .then((item) => {
         setNewItem(item.name, item.imageUrl, item.weatherType); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]);
+        handleCloseModal();
       })
-      .catch((error) => {
-        console.error("Error adding item: ", error);
-      });
+      .catch(console.error);
   };
 
   const handleDeleteItem = (_id) => {
@@ -77,9 +71,7 @@ function App({ children }) {
         );
         handleCloseModal();
       })
-      .catch((error) => {
-        console.error("Error deleting item: ", error);
-      });
+      .catch(console.error);
   };
 
   const handleAddClick = (e) => {
@@ -105,10 +97,6 @@ function App({ children }) {
 
   const handleToggleSwitchChange = (e) => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
-  };
-
-  const onAddItem = (e, values) => {
-    e.preventDefault();
   };
 
   //   {
@@ -177,7 +165,7 @@ function App({ children }) {
         {activeModal === "add-garment" && (
           <AddItemModal
             isOpen={activeModal === "add-garment"}
-            onAddItem={onAddItem}
+            handleAddItem={handleAddItem}
             handleCloseModal={handleCloseModal}
             newItem={newItem}
             setNewItem={setNewItem}

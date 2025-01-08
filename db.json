@@ -113,6 +113,48 @@
       "imageUrl": "https://www.sail.ca/media/catalog/product/g/a/ganka-ka-86302m_mnrr_21-in-__01.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700",
       "weather": "cold",
       "_id": 32
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 33
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 34
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 35
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 36
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 37
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 38
+    },
+    {
+      "name": "Earmuffs",
+      "imageUrl": "https://cdn.staticans.com/image/tr:e-sharpen-01,h-1440,w-1080,cm-pad_resize/catalog/toniq/product/OAW21TKQMEM360/OAW21TKQMEM360_1.jpg",
+      "weather": "cold",
+      "_id": 39
     }
   ]
 }
