@@ -13,10 +13,9 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
       <WeatherCard weatherData={weatherData} />
       <section className="cards">
         <p className="cards__text">
-          Today is {weatherData.temp[currentTempUnit]} &deg; F. You may want to
-          wear:
+          Today is {weatherData.temp[currentTempUnit]} &deg; {currentTempUnit}.
+          You may want to wear:
         </p>
-        {/* {weatherData.temp.F} &deg; */}
         <ul className="cards__list">
           {clothingItems.map((item) => {
             if (item.weather === weatherData.type)

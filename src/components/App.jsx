@@ -29,6 +29,7 @@ function App({ children }) {
     condition: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("C");
@@ -51,24 +52,53 @@ function App({ children }) {
       });
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return; // !activemodal=!effect
+
+    const handleEscapeClose = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+
+    const handleModalBackgroundClick = (e) => {
+      if (e.target.classList.contains("modal_opened")) {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapeClose);
+    document.addEventListener("click", handleModalBackgroundClick);
+
+    //cleanup function after code listener poop
+    return () => {
+      document.removeEventListener("keydown", handleEscapeClose);
+      document.removeEventListener("click", handleModalBackgroundClick);
+    };
+  }, [activeModal]);
+
   const handleAddItem = (item) => {
+    setIsLoading(true);
     api
       .addClothingItem(item.name, item.imageUrl, item.weatherType)
       .then((item) => {
         setNewItem(item.name, item.imageUrl, item.weatherType); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]);
+        setIsLoading(false);
         handleCloseModal();
       })
       .catch(console.error);
   };
 
   const handleDeleteItem = (_id) => {
+    setIsLoading(true);
     api
       .deleteClothingItem(_id)
       .then(() => {
         setClothingItems((clothingItems) =>
           clothingItems.filter((item) => item._id !== _id)
         );
+        setIsLoading(false);
         handleCloseModal();
       })
       .catch(console.error);
@@ -170,6 +200,7 @@ function App({ children }) {
             newItem={newItem}
             setNewItem={setNewItem}
             handleAddItem={handleAddItem}
+            isLoading={isLoading}
           />
         )}
 

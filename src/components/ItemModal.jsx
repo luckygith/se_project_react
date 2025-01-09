@@ -1,6 +1,12 @@
 import "../blocks/ItemModal.css";
 
-function ItemModal({ isOpen, card, handleCloseModal, handleDeleteItem }) {
+function ItemModal({
+  isOpen,
+  card,
+  handleCloseModal,
+  handleDeleteItem,
+  isLoading,
+}) {
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_image">
@@ -21,7 +27,7 @@ function ItemModal({ isOpen, card, handleCloseModal, handleDeleteItem }) {
             type="button"
             className="modal__delete-button"
           >
-            Delete item
+            {isLoading ? "Deleting item..." : "Delete item"}
           </button>
         </div>
       </div>

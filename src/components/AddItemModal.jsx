@@ -1,7 +1,19 @@
 import React, { useState } from "react";
 import ModalWithForm from "../components/ModalWithForm";
 
-const AddItemModal = ({ handleCloseModal, isOpen, handleAddItem }) => {
+// const AddItemModal = ({ handleCloseModal, isOpen, handleAddItem }) => {
+//   const { values, handleChange, setValues } = useForm({
+//     name: "",
+//     imageUrl: "",
+//     weatherType: "",
+//   });
+
+const AddItemModal = ({
+  handleCloseModal,
+  isOpen,
+  handleAddItem,
+  isLoading,
+}) => {
   const [name, setName] = useState("");
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -17,6 +29,8 @@ const AddItemModal = ({ handleCloseModal, isOpen, handleAddItem }) => {
     setWeatherType(e.target.value);
   };
 
+  // const {values, handleChange, inputValues}
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleAddItem({ name, imageUrl: image, weatherType });
@@ -25,7 +39,7 @@ const AddItemModal = ({ handleCloseModal, isOpen, handleAddItem }) => {
   return (
     <ModalWithForm
       title="New Clothes"
-      buttonText="Add Clothes"
+      buttonText={isLoading ? "Adding item..." : "Add item"}
       handleCloseModal={handleCloseModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
