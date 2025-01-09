@@ -103,16 +103,16 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
     },
     {
-      "name": "Toque",
-      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
-      "weather": "cold",
-      "_id": 29
-    },
-    {
       "name": "Snow shoes",
       "imageUrl": "https://www.sail.ca/media/catalog/product/g/a/ganka-ka-86302m_mnrr_21-in-__01.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700",
       "weather": "cold",
       "_id": 32
+    },
+    {
+      "name": "Toque",
+      "imageUrl": "https://www.toquesfromtheheart.ca/cdn/shop/products/DSCF6379.jpg?v=1664559062",
+      "weather": "cold",
+      "_id": 33
     }
   ]
 }

@@ -80,11 +80,12 @@ function App({ children }) {
   const handleAddItem = (item) => {
     setIsLoading(true);
     api
-      .addClothingItem(item.name, item.imageUrl, item.weatherType)
+      .addClothingItem(item.name, item.imageUrl, item.weather)
       .then((item) => {
-        setNewItem(item.name, item.imageUrl, item.weatherType); // Spread... creates a shallow copy of array for addedItem to be appended to
+        setNewItem(item.name, item.imageUrl, item.weather); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]);
         setIsLoading(false);
+        console.log(item);
         handleCloseModal();
       })
       .catch(console.error);
