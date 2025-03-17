@@ -3,7 +3,7 @@ import "../blocks/ModalWithForm.css";
 function ModalWithForm({
   children,
   title,
-  buttonText = "Add Garment",
+  buttonText = "Add Clothes",
   isOpen,
   handleCloseModal,
   onSubmit,

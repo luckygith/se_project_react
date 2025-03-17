@@ -1,10 +1,20 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import "../blocks/App.css";
 import Header from "./Header";
 import Main from "./Main";
 import ItemModal from "./ItemModal";
 import Footer from "./Footer";
+
+import ProtectedRoute from "./ProtectedRoute";
+import { setToken, getToken } from "../utils/token";
+
 import { getWeather, filterWeatherData } from "../utils/weatherApi";
 import { coordinates, APIkey } from "../utils/constants";
 import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
@@ -19,6 +29,7 @@ import {
 } from "../utils/api";
 
 import { api } from "../utils/api";
+import RegisterUserModal from "./RegisterUserModal";
 
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
@@ -28,6 +39,10 @@ function App({ children }) {
     isDay: true,
     condition: "",
   });
+
+  // STATE VARIABLES
+  const [userData, setUserData] = useState({ username: "", email: "" });
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // all logic depends onwhether or not use is logged in
 
   const [isLoading, setIsLoading] = useState(false);
   const [activeModal, setActiveModal] = useState("");
@@ -40,6 +55,21 @@ function App({ children }) {
     weather: "",
     id: "",
   });
+
+  useEffect(() => {
+    const jwt = getToken();
+
+    if (!jwt) {
+      return;
+    }
+    api
+      .getUserInfo(jwt)
+      .then(({ username, email }) => {
+        setIsLoggedIn(true);
+        setUserData({ username, email });
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     api
@@ -61,6 +91,7 @@ function App({ children }) {
       }
     };
 
+    // HANDLERS
     const handleModalBackgroundClick = (e) => {
       if (e.target.classList.contains("modal_opened")) {
         handleCloseModal();
@@ -82,7 +113,7 @@ function App({ children }) {
     api
       .addClothingItem(item.name, item.imageUrl, item.weather)
       .then((item) => {
-        setNewItem(item.name, item.imageUrl, item.weather); // Spread... creates a shallow copy of array for addedItem to be appended to
+        setNewItem(item.name, item.imageUrl, item.weather, token); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]);
         setIsLoading(false);
         console.log(item);
@@ -105,9 +136,42 @@ function App({ children }) {
       .catch(console.error);
   };
 
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
+    setActiveModal("register-user");
+  };
+
+  const handleRegistration = ({ email, password, username, avatarUrl }) => {
+    auth
+      .register(email, password, username, avatarUrl)
+      .then(console.log("handle reigstration from App.jsx"))
+      .catch(console.error);
+  };
+
+  const handleLogin = ({ email, password }) => {
+    if (!email || !password) {
+      return;
+    }
+    auth
+      .authorize(email, password)
+      .then((data) => {
+        if (data.jwt) {
+          setToken(data.jwt); // save token to local storage!
+          setUserData(data.user); // save user's data to state
+          setIsLoggedIn(true); // log the user in
+        }
+      })
+      .catch(console.error);
+  };
+
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    setActiveModal("login");
+  };
+
   const handleAddClick = (e) => {
     e.preventDefault();
-    setActiveModal("add-garment");
+    setActiveModal("add-clothes");
   };
 
   const handleCloseModal = () => {
@@ -179,28 +243,74 @@ function App({ children }) {
             <Route
               path="/profile"
               element={
-                <Profile
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  handleAddClick={handleAddClick}
-                  clothingItems={clothingItems}
-                  handleCloseModal={handleCloseModal}
-                />
+                <ProtectedRoute>
+                  <Profile
+                    userData={userData}
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    handleAddClick={handleAddClick}
+                    clothingItems={clothingItems}
+                    handleCloseModal={handleCloseModal}
+                  />
+                </ProtectedRoute>
               }
             />
             <Route path="*" element={<p>PAGE NOT FOUND</p>} />
+            {/* 
+            <Route
+          path="*"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/ducks" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        /> */}
           </Routes>
           <Footer />
         </div>
 
-        {activeModal === "add-garment" && (
-          <AddItemModal
-            isOpen={activeModal === "add-garment"}
+        {activeModal === "register-user" && (
+          <RegisterUserModal
+            isOpen={activeModal === "register-user"}
             handleAddItem={handleAddItem}
             handleCloseModal={handleCloseModal}
             newItem={newItem}
             setNewItem={setNewItem}
+            isLoading={isLoading}
+          />
+        )}
+
+        {activeModal === "login" && (
+          <RegisterUserModal
+            isOpen={activeModal === "login"}
             handleAddItem={handleAddItem}
+            handleCloseModal={handleCloseModal}
+            newItem={newItem}
+            setNewItem={setNewItem}
+            isLoading={isLoading}
+          />
+        )}
+
+        {activeModal === "add-clothes" && (
+          <AddItemModal
+            isOpen={activeModal === "add-clothes"}
+            handleAddItem={handleAddItem}
+            handleCloseModal={handleCloseModal}
+            newItem={newItem}
+            setNewItem={setNewItem}
+            isLoading={isLoading}
+          />
+        )}
+
+        {activeModal === "add-clothes" && (
+          <AddItemModal
+            isOpen={activeModal === "add-clothes"}
+            handleAddItem={handleAddItem}
+            handleCloseModal={handleCloseModal}
+            newItem={newItem}
+            setNewItem={setNewItem}
             isLoading={isLoading}
           />
         )}

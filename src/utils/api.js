@@ -8,6 +8,19 @@ export const checkResponse = (res) => {
   }
 };
 
+export const getUserInfo = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  });
+};
+
 // const requestApi = (url, options = {}) => {
 //   return fetch(url, options)
 //     .then((res) => (res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)))
@@ -21,11 +34,13 @@ export function getClothingItems() {
   return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 
-export function addClothingItem(name, imageUrl, weather) {
+export function addClothingItem(token, name, imageUrl, weather) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, imageUrl, weather }),
   })
