@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { AppContext } from "../contexts/AppContext";
 import { Navigate, useLocation } from "react-router-dom";
 
 function ProtectedRoute({ children, anonymous = false }) {

@@ -1,26 +1,13 @@
 export const baseUrl = "http://localhost:3001";
 
-// export const getUserToken = (token) => {
-//   return fetch(`${baseUrl}/users/me`, {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`,
-//     },
-//   }).then((res) => {
-//     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-//   });
-// };
-
-export const register = (email, password, username, avatarUrl) => {
+export const register = (name, avatar, email, password) => {
   return fetch(`${baseUrl}/auth/local/register`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password, username, avatarUrl }),
+    body: JSON.stringify({ name, avatar, email, password }),
   }).then((res) => {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   });

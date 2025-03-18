@@ -5,12 +5,17 @@ import avatar from "../assets/avatar.svg";
 import ToggleSwitch from "./ToggleSwitch";
 import { Link } from "react-router-dom";
 
-function Header({ handleAddClick, weatherData }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  userData = { username: "Username here" },
+}) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
+  const { username } = userData;
   return (
     <header className="header">
       <Link to="/">
@@ -32,7 +37,7 @@ function Header({ handleAddClick, weatherData }) {
 
       <Link className="header__link" to="/profile">
         <div className="header__user-container">
-          <p className="header__username">Name</p>
+          <p className="header__username">{username}</p>
           <img
             src={avatar}
             alt="user avatar image"

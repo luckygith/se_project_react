@@ -6,7 +6,10 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
+
+import { AppContext } from "../contexts/AppContext";
 import "../blocks/App.css";
+
 import Header from "./Header";
 import Main from "./Main";
 import ItemModal from "./ItemModal";
@@ -30,6 +33,7 @@ import {
 
 import { api } from "../utils/api";
 import RegisterUserModal from "./RegisterUserModal";
+import LoginUserModal from "./LoginUserModal";
 
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
@@ -75,7 +79,7 @@ function App({ children }) {
     api
       .getClothingItems()
       .then((data) => {
-        setClothingItems(data);
+        console.log("Fetched data:", JSON.stringify(data)); // setClothingItems(data);
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
@@ -141,9 +145,9 @@ function App({ children }) {
     setActiveModal("register-user");
   };
 
-  const handleRegistration = ({ email, password, username, avatarUrl }) => {
+  const handleRegistration = ({ name, avatar, email, password }) => {
     auth
-      .register(email, password, username, avatarUrl)
+      .register(name, avatar, email, password)
       .then(console.log("handle reigstration from App.jsx"))
       .catch(console.error);
   };
@@ -218,45 +222,48 @@ function App({ children }) {
   }, []);
 
   return (
-    <div className="page">
-      <CurrentTempUnitContext.Provider
-        value={{ currentTempUnit, handleToggleSwitchChange }}
-      >
-        <div className="page__content">
-          <Header
-            handleAddClick={handleAddClick}
-            handleAddItem={handleAddItem}
-            weatherData={weatherData}
-          />
-
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
-              }
+    <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <div className="page">
+        <CurrentTempUnitContext.Provider
+          value={{ currentTempUnit, handleToggleSwitchChange }}
+        >
+          <div className="page__content">
+            <Header
+              handleRegisterClick={handleRegisterClick}
+              handleLoginClick={handleLoginClick}
+              handleAddClick={handleAddClick}
+              handleAddItem={handleAddItem}
+              weatherData={weatherData}
             />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile
-                    userData={userData}
+
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
-                    handleAddClick={handleAddClick}
                     clothingItems={clothingItems}
-                    handleCloseModal={handleCloseModal}
                   />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<p>PAGE NOT FOUND</p>} />
-            {/* 
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      userData={userData}
+                      weatherData={weatherData}
+                      handleCardClick={handleCardClick}
+                      handleAddClick={handleAddClick}
+                      clothingItems={clothingItems}
+                      handleCloseModal={handleCloseModal}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<p>PAGE NOT FOUND</p>} />
+              {/* 
             <Route
           path="*"
           element={
@@ -267,65 +274,53 @@ function App({ children }) {
             )
           }
         /> */}
-          </Routes>
-          <Footer />
-        </div>
+            </Routes>
+            <Footer />
+          </div>
 
-        {activeModal === "register-user" && (
-          <RegisterUserModal
-            isOpen={activeModal === "register-user"}
-            handleAddItem={handleAddItem}
-            handleCloseModal={handleCloseModal}
-            newItem={newItem}
-            setNewItem={setNewItem}
-            isLoading={isLoading}
-          />
-        )}
+          {activeModal === "register-user" && (
+            <RegisterUserModal
+              isOpen={activeModal === "register-user"}
+              handleCloseModal={handleCloseModal}
+              handleRegistration={handleRegistration}
+              isLoading={isLoading}
+            />
+          )}
 
-        {activeModal === "login" && (
-          <RegisterUserModal
-            isOpen={activeModal === "login"}
-            handleAddItem={handleAddItem}
-            handleCloseModal={handleCloseModal}
-            newItem={newItem}
-            setNewItem={setNewItem}
-            isLoading={isLoading}
-          />
-        )}
+          {activeModal === "login" && (
+            <LoginUserModal
+              isOpen={activeModal === "login"}
+              handleCloseModal={handleCloseModal}
+              handleLogin={handleLogin}
+              isLoading={isLoading}
+            />
+          )}
 
-        {activeModal === "add-clothes" && (
-          <AddItemModal
-            isOpen={activeModal === "add-clothes"}
-            handleAddItem={handleAddItem}
-            handleCloseModal={handleCloseModal}
-            newItem={newItem}
-            setNewItem={setNewItem}
-            isLoading={isLoading}
-          />
-        )}
+          {activeModal === "add-clothes" && (
+            <ProtectedRoute>
+              <AddItemModal
+                isOpen={activeModal === "add-clothes"}
+                handleAddItem={handleAddItem}
+                handleCloseModal={handleCloseModal}
+                newItem={newItem}
+                setNewItem={setNewItem}
+                isLoading={isLoading}
+              />
+            </ProtectedRoute>
+          )}
 
-        {activeModal === "add-clothes" && (
-          <AddItemModal
-            isOpen={activeModal === "add-clothes"}
-            handleAddItem={handleAddItem}
-            handleCloseModal={handleCloseModal}
-            newItem={newItem}
-            setNewItem={setNewItem}
-            isLoading={isLoading}
-          />
-        )}
-
-        {activeModal === "preview" && (
-          <ItemModal
-            isOpen={activeModal === "preview"}
-            card={selectedCard}
-            handleCloseModal={handleCloseModal}
-            handleCardClick={handleCardClick}
-            handleDeleteItem={handleDeleteItem}
-          />
-        )}
-      </CurrentTempUnitContext.Provider>
-    </div>
+          {activeModal === "preview" && (
+            <ItemModal
+              isOpen={activeModal === "preview"}
+              card={selectedCard}
+              handleCloseModal={handleCloseModal}
+              handleCardClick={handleCardClick}
+              handleDeleteItem={handleDeleteItem}
+            />
+          )}
+        </CurrentTempUnitContext.Provider>
+      </div>
+    </AppContext.Provider>
   );
 }
 

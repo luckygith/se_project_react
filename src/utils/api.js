@@ -1,15 +1,28 @@
 const baseUrl = "http://localhost:3001";
 
+// export const checkResponse = (res) => {
+//   if (res.ok) {
+//     return res.json();
+//   } else {
+//     return Promise.reject(`Error: ${res.status}`);
+//   }
+// };
+
 export const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Error: ${res.status}`);
-  }
+  return res.text().then((text) => {
+    try {
+      const json = JSON.parse(text);
+      if (res.ok) return json;
+      throw new Error(`Error ${res.status}: ${json.message || res.statusText}`);
+    } catch (err) {
+      // If it's not JSON, just return the raw text or status message
+      throw new Error(`Error ${res.status}: ${text || res.statusText}`);
+    }
+  });
 };
 
 export const getUserInfo = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -51,9 +64,10 @@ export function addClothingItem(token, name, imageUrl, weather) {
     });
 }
 
-export function deleteClothingItem(_id) {
+export function deleteClothingItem(token, _id) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
   })
     .then(checkResponse)
     .then((data) => {
