@@ -10,6 +10,7 @@ import {
 import { AppContext } from "../contexts/AppContext";
 import "../blocks/App.css";
 
+import { authorize, register } from "../utils/auth";
 import Header from "./Header";
 import Main from "./Main";
 import ItemModal from "./ItemModal";
@@ -45,7 +46,7 @@ function App({ children }) {
   });
 
   // STATE VARIABLES
-  const [userData, setUserData] = useState({ username: "", email: "" });
+  const [userData, setUserData] = useState({ name: "", email: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false); // all logic depends onwhether or not use is logged in
 
   const [isLoading, setIsLoading] = useState(false);
@@ -63,23 +64,22 @@ function App({ children }) {
   useEffect(() => {
     const jwt = getToken();
 
-    if (!jwt) {
-      return;
+    if (jwt) {
+      api
+        .getUserInfo(jwt)
+        .then(({ name, email }) => {
+          setIsLoggedIn(true);
+          setUserData({ name, email });
+        })
+        .catch(console.error);
     }
-    api
-      .getUserInfo(jwt)
-      .then(({ username, email }) => {
-        setIsLoggedIn(true);
-        setUserData({ username, email });
-      })
-      .catch(console.error);
   }, []);
 
   useEffect(() => {
     api
       .getClothingItems()
       .then((data) => {
-        console.log("Fetched data:", JSON.stringify(data)); // setClothingItems(data);
+        console.log("getClothing items fetched data:", data); // setClothingItems(data);
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
@@ -114,10 +114,17 @@ function App({ children }) {
 
   const handleAddItem = (item) => {
     setIsLoading(true);
+    const jwt = getToken();
     api
-      .addClothingItem(item.name, item.imageUrl, item.weather)
+      .addClothingItem(item.name, item.imageUrl, item.weather, jwt)
       .then((item) => {
-        setNewItem(item.name, item.imageUrl, item.weather, token); // Spread... creates a shallow copy of array for addedItem to be appended to
+        setNewItem({
+          name: item.name,
+          imageUrl: item.imageUrl,
+          weather: item.weather,
+        });
+
+        // setNewItem(item.name, item.imageUrl, item.weather, jwt); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]);
         setIsLoading(false);
         console.log(item);
@@ -128,8 +135,9 @@ function App({ children }) {
 
   const handleDeleteItem = (_id) => {
     setIsLoading(true);
+    const jwt = getToken();
     api
-      .deleteClothingItem(_id)
+      .deleteClothingItem(_id, jwt)
       .then(() => {
         setClothingItems((clothingItems) =>
           clothingItems.filter((item) => item._id !== _id)
@@ -140,24 +148,28 @@ function App({ children }) {
       .catch(console.error);
   };
 
-  const handleRegisterClick = (e) => {
-    e.preventDefault();
+  const handleRegisterClick = () => {
     setActiveModal("register-user");
   };
 
-  const handleRegistration = ({ name, avatar, email, password }) => {
-    auth
-      .register(name, avatar, email, password)
-      .then(console.log("handle reigstration from App.jsx"))
-      .catch(console.error);
+  const handleRegistration = ({ email, password, name, avatarUrl }) => {
+    setIsLoading(true);
+    const jwt = setToken();
+    register(email, password, name, avatarUrl, jwt)
+      .then((data) => {
+        console.log("handle registration App.jsx activated", data);
+        handleCloseModal();
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   };
 
   const handleLogin = ({ email, password }) => {
     if (!email || !password) {
       return;
     }
-    auth
-      .authorize(email, password)
+    const jwt = getToken();
+    authorize(email, password)
       .then((data) => {
         if (data.jwt) {
           setToken(data.jwt); // save token to local storage!
@@ -168,8 +180,7 @@ function App({ children }) {
       .catch(console.error);
   };
 
-  const handleLoginClick = (e) => {
-    e.preventDefault();
+  const handleLoginClick = () => {
     setActiveModal("login");
   };
 
@@ -250,16 +261,16 @@ function App({ children }) {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute isLoggedIn={isLoggedIn}>
-                    <Profile
-                      userData={userData}
-                      weatherData={weatherData}
-                      handleCardClick={handleCardClick}
-                      handleAddClick={handleAddClick}
-                      clothingItems={clothingItems}
-                      handleCloseModal={handleCloseModal}
-                    />
-                  </ProtectedRoute>
+                  // <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    userData={userData}
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    handleAddClick={handleAddClick}
+                    clothingItems={clothingItems}
+                    handleCloseModal={handleCloseModal}
+                  />
+                  // </ProtectedRoute>
                 }
               />
               <Route path="*" element={<p>PAGE NOT FOUND</p>} />
@@ -284,6 +295,7 @@ function App({ children }) {
               handleCloseModal={handleCloseModal}
               handleRegistration={handleRegistration}
               isLoading={isLoading}
+              handleLoginClick={handleLoginClick}
             />
           )}
 
@@ -293,20 +305,19 @@ function App({ children }) {
               handleCloseModal={handleCloseModal}
               handleLogin={handleLogin}
               isLoading={isLoading}
+              handleRegisterClick={handleRegisterClick}
             />
           )}
 
           {activeModal === "add-clothes" && (
-            <ProtectedRoute>
-              <AddItemModal
-                isOpen={activeModal === "add-clothes"}
-                handleAddItem={handleAddItem}
-                handleCloseModal={handleCloseModal}
-                newItem={newItem}
-                setNewItem={setNewItem}
-                isLoading={isLoading}
-              />
-            </ProtectedRoute>
+            <AddItemModal
+              isOpen={activeModal === "add-clothes"}
+              handleAddItem={handleAddItem}
+              handleCloseModal={handleCloseModal}
+              newItem={newItem}
+              setNewItem={setNewItem}
+              isLoading={isLoading}
+            />
           )}
 
           {activeModal === "preview" && (

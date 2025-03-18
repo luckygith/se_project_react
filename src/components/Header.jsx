@@ -7,15 +7,17 @@ import { Link } from "react-router-dom";
 
 function Header({
   handleAddClick,
+  handleLoginClick,
+  handleRegisterClick,
   weatherData,
-  userData = { username: "Username here" },
+  userData = { name: "Username here" },
 }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  const { username } = userData;
+  const { name } = userData;
   return (
     <header className="header">
       <Link to="/">
@@ -34,10 +36,34 @@ function Header({
       >
         + Add clothes
       </button>
+      <button
+        onClick={handleLoginClick}
+        type="button"
+        className="header__login-button"
+      >
+        Login
+      </button>
+      <button
+        onClick={handleRegisterClick}
+        type="button"
+        className="header__sign-up-button"
+      >
+        Sign Up
+      </button>
 
+      {/* <Link className="header__link">
+        <div className="header__anonymous-user-container">
+          <p className="header__login-button">Login</p>
+        </div>
+      </Link> */}
+      {/* <Link className="header__link">
+        <div className="header__anonymous-user-container">
+          <p className="header__sign-up-button">Sign Up</p>
+        </div>
+      </Link> */}
       <Link className="header__link" to="/profile">
         <div className="header__user-container">
-          <p className="header__username">{username}</p>
+          <p className="header__username">{name}</p>
           <img
             src={avatar}
             alt="user avatar image"

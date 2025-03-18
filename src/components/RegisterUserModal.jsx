@@ -7,11 +7,12 @@ const RegisterUserModal = ({
   isOpen,
   isLoading,
   handleRegistration,
+  handleLoginClick,
 }) => {
   const [data, setData] = useState({
     email: "",
     password: "",
-    username: "",
+    name: "",
     avatarUrl: "",
   });
 
@@ -28,10 +29,15 @@ const RegisterUserModal = ({
     handleRegistration(data);
   };
 
+  const handleOrLoginClick = () => {
+    handleCloseModal();
+    handleLoginClick();
+  };
+
   return (
     <ModalWithForm
       title="Sign Up"
-      buttonText={isLoading ? "Registering Login Information" : "Sign Up"}
+      buttonText={isLoading ? "Signing Up" : "Sign Up"}
       handleCloseModal={handleCloseModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
@@ -39,23 +45,25 @@ const RegisterUserModal = ({
       <label htmlFor="email" className="modal__label">
         Email{""}
         <input
-          type="text"
+          type="email"
           className="modal__input"
           id="email"
           name="email"
           placeholder="Email"
-          value={values.email}
+          value={data.email}
+          onChange={handleChange}
         />
       </label>
       <label htmlFor="password" className="modal__label">
         Password{""}
         <input
-          type="text"
+          type="password"
           className="modal__input"
           id="password"
           name="password"
           placeholder="Password"
-          value={values.password}
+          value={data.password}
+          onChange={handleChange}
         />
       </label>
       <label htmlFor="name" className="modal__label">
@@ -66,7 +74,8 @@ const RegisterUserModal = ({
           id="name"
           name="name"
           placeholder="Name"
-          value={values.name}
+          value={data.name}
+          onChange={handleChange}
         />
       </label>
       <label htmlFor="avatarUrl" className="modal__label">
@@ -77,10 +86,19 @@ const RegisterUserModal = ({
           id="avatarUrl"
           name="avatarUrl"
           placeholder="Avatar URL"
-          value={values.avatarUrl}
+          value={data.avatarUrl}
           onChange={handleChange}
         />
       </label>
+      <div className="modal__button-container">
+        <button
+          type="button"
+          className="modal__to-login"
+          onClick={handleOrLoginClick}
+        >
+          or Login
+        </button>
+      </div>
     </ModalWithForm>
   );
 };

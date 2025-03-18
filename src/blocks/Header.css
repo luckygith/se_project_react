@@ -35,7 +35,9 @@
   margin: 0;
 }
 
-.header__add-clothes-button {
+.header__add-clothes-button,
+.header__login-button,
+.header__sign-up-button {
   margin: 0 20px 0;
   padding: 0;
   border: none;

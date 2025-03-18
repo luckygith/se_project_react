@@ -3,14 +3,14 @@ import "../blocks/SideBar.css";
 import { useContext } from "react";
 
 function SideBar(
-  userData = { username: "Username here", email: "Email here" }
+  userData = { name: "Username here", email: "Email here", avatarUrl: "" }
 ) {
-  const { username, email } = userData;
+  const { name, email } = userData;
 
   return (
     <div className="sidebar">
-      <img className="sidebar__avatar" src={avatarUrl} alt="Default avatar" />
-      <p className="sidebar__username">{username}</p>
+      <img className="sidebar__avatar" src={avatar} alt="Default avatar" />
+      <p className="sidebar__username">{name}</p>
     </div>
   );
 }

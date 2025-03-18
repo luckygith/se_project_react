@@ -7,6 +7,7 @@ const LoginUserModal = ({
   isOpen,
   handleLogin,
   isLoading,
+  handleRegisterClick,
 }) => {
   const [data, setData] = useState({
     email: "",
@@ -23,12 +24,17 @@ const LoginUserModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(values);
+    handleLogin(data);
+  };
+
+  const handleOrRegisterClick = () => {
+    handleCloseModal();
+    handleRegisterClick();
   };
 
   return (
     <ModalWithForm
-      title="Sign Up"
+      title="Login"
       buttonText={isLoading ? "Registering Login Information" : "Sign Up"}
       handleCloseModal={handleCloseModal}
       isOpen={isOpen}
@@ -58,6 +64,15 @@ const LoginUserModal = ({
           onChange={handleChange}
         />
       </label>
+      <div className="modal__button-container">
+        <button
+          type="button"
+          className="modal__to-register"
+          onClick={handleOrRegisterClick}
+        >
+          or Register
+        </button>
+      </div>
     </ModalWithForm>
   );
 };

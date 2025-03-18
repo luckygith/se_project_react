@@ -37,6 +37,16 @@
   align-items: start;
 }
 
+.modal__to-login,
+.modal__to-register {
+  border: none;
+  font-family: "CabinetGrotesk-Bold";
+  line-height: 20px;
+  size: 16px;
+  opacity: 50%;
+  background-color: white;
+}
+
 .modal__caption {
   font-size: 20px;
   line-height: 24px;

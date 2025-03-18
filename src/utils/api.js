@@ -13,10 +13,10 @@ export const checkResponse = (res) => {
     try {
       const json = JSON.parse(text);
       if (res.ok) return json;
-      throw new Error(`Error ${res.status}: ${json.message || res.statusText}`);
+      throw new Error(`Error ${res.status}: ${json.message || res.status}`);
     } catch (err) {
-      // If it's not JSON, just return the raw text or status message
-      throw new Error(`Error ${res.status}: ${text || res.statusText}`);
+      // If it's not JSON, just return raw text or status message
+      throw new Error(`Error ${res.status}: ${text || res.status}`);
     }
   });
 };
@@ -47,7 +47,7 @@ export function getClothingItems() {
   return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 
-export function addClothingItem(token, name, imageUrl, weather) {
+export function addClothingItem(name, imageUrl, weather, token) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -76,4 +76,9 @@ export function deleteClothingItem(token, _id) {
     });
 }
 
-export const api = { getClothingItems, addClothingItem, deleteClothingItem };
+export const api = {
+  getClothingItems,
+  addClothingItem,
+  deleteClothingItem,
+  getUserInfo,
+};
