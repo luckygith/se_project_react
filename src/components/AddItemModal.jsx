@@ -15,29 +15,6 @@ const AddItemModal = ({
     weather: "",
   });
 
-  // const AddItemModal = ({
-  //   handleCloseModal,
-  //   isOpen,
-  //   handleAddItem,
-  //   isLoading,
-  // }) => {
-  //   const [name, setName] = useState("");
-  //   const handleNameChange = (e) => {
-  //     setName(e.target.value);
-  //   };
-
-  //   const [image, setImage] = useState("");
-  //   const handleImageChange = (e) => {
-  //     setImage(e.target.value);
-  //   };
-
-  //   const [weatherType, setWeatherType] = useState("");
-  //   const handleWeatherTypeChange = (e) => {
-  //     setWeatherType(e.target.value);
-  //   };
-
-  // const {values, handleChange, inputValues}
-
   const handleSubmit = (e) => {
     e.preventDefault();
     handleAddItem(values);

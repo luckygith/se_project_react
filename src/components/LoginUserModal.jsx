@@ -35,7 +35,7 @@ const LoginUserModal = ({
   return (
     <ModalWithForm
       title="Login"
-      buttonText={isLoading ? "Registering Login Information" : "Sign Up"}
+      buttonText={isLoading ? "Logging in..." : "Log In"}
       handleCloseModal={handleCloseModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}

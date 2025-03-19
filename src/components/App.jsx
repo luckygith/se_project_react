@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 import { AppContext } from "../contexts/AppContext";
+
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../blocks/App.css";
 
 import { authorize, register } from "../utils/auth";
@@ -48,6 +50,7 @@ function App({ children }) {
   // STATE VARIABLES
   const [userData, setUserData] = useState({ name: "", email: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false); // all logic depends onwhether or not use is logged in
+  const [currentUser, setCurrentUser] = userState({});
 
   const [isLoading, setIsLoading] = useState(false);
   const [activeModal, setActiveModal] = useState("");
@@ -123,7 +126,6 @@ function App({ children }) {
           imageUrl: item.imageUrl,
           weather: item.weather,
         });
-
         // setNewItem(item.name, item.imageUrl, item.weather, jwt); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]);
         setIsLoading(false);
@@ -233,7 +235,7 @@ function App({ children }) {
   }, []);
 
   return (
-    <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <CurrentUserContext.Provider>
       <div className="page">
         <CurrentTempUnitContext.Provider
           value={{ currentTempUnit, handleToggleSwitchChange }}
@@ -331,7 +333,7 @@ function App({ children }) {
           )}
         </CurrentTempUnitContext.Provider>
       </div>
-    </AppContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

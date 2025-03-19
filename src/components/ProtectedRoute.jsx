@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "../contexts/AppContext";
+// import { AppContext } from "../contexts/AppContext";
 import { Navigate, useLocation } from "react-router-dom";
 
 function ProtectedRoute({ children, anonymous = false }) {
@@ -10,7 +10,7 @@ function ProtectedRoute({ children, anonymous = false }) {
   const from = location.state?.from || "/";
 
   // removed as argument and destructured isLoggedIn from the value provided by AppContext made
-  const { isLoggedIn } = useContext(AppContext);
+  // const { isLoggedIn } = useContext(AppContext);
 
   // If the user is logged in we redirect them away from our
   // anonymous routes.
