@@ -64,7 +64,7 @@ export function addClothingItem(name, imageUrl, weather, token) {
     });
 }
 
-export function deleteClothingItem(token, _id) {
+export function deleteClothingItem(_id, token) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },

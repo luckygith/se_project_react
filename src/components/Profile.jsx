@@ -1,7 +1,8 @@
 import ClothesSection from "./ClothesSection";
 import SideBar from "./SideBar";
 import "../blocks/Profile.css";
-import React from "react";
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Profile({
   handleCardClick,

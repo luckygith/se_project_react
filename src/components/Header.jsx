@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../blocks/Header.css";
 import logo from "../assets/logo.svg";
 
@@ -10,14 +12,15 @@ function Header({
   handleLoginClick,
   handleRegisterClick,
   weatherData,
-  userData = { name: "Username here" },
+  isLoggedIn,
 }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  const { name } = userData;
+  const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser);
   return (
     <header className="header">
       <Link to="/">
@@ -36,6 +39,7 @@ function Header({
       >
         + Add clothes
       </button>
+
       <button
         onClick={handleLoginClick}
         type="button"
@@ -63,9 +67,9 @@ function Header({
       </Link> */}
       <Link className="header__link" to="/profile">
         <div className="header__user-container">
-          <p className="header__username">{name}</p>
+          <p className="header__username">{currentUser.name}</p>
           <img
-            src={avatar}
+            src={currentUser.avatar}
             alt="user avatar image"
             className="header__username-avatar"
           />

@@ -68,6 +68,21 @@
   padding: 28px 28px 36px 28px;
 }
 
+.modal__buttons-container {
+  border: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
+
+.modal__to-login {
+  border: none;
+  padding: 0;
+  height: 40px;
+  width: 80px;
+}
+
 .modal__input {
   display: block;
   border: none;

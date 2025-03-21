@@ -35,6 +35,13 @@
   margin: 0;
 }
 
+.header__username-avatar {
+  height: 40px;
+  width: 40px;
+
+  border-radius: 50%;
+}
+
 .header__add-clothes-button,
 .header__login-button,
 .header__sign-up-button {

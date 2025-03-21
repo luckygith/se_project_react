@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   Routes,
   Route,
@@ -48,9 +48,8 @@ function App({ children }) {
   });
 
   // STATE VARIABLES
-  const [userData, setUserData] = useState({ name: "", email: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false); // all logic depends onwhether or not use is logged in
-  const [currentUser, setCurrentUser] = userState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
   const [activeModal, setActiveModal] = useState("");
@@ -70,9 +69,11 @@ function App({ children }) {
     if (jwt) {
       api
         .getUserInfo(jwt)
-        .then(({ name, email }) => {
+        .then(({ name, email, avatar, _id }) => {
           setIsLoggedIn(true);
-          setUserData({ name, email });
+
+          setCurrentUser({ name, email, avatar, _id });
+          console.log(jwt, name, email, avatar, _id);
         })
         .catch(console.error);
     }
@@ -83,11 +84,16 @@ function App({ children }) {
       .getClothingItems()
       .then((data) => {
         console.log("getClothing items fetched data:", data); // setClothingItems(data);
+        setClothingItems(data); // Update state with the fetched items
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
       });
   }, []);
+
+  useEffect(() => {
+    console.log("Updated clothingItems:", clothingItems);
+  }, [clothingItems]);
 
   useEffect(() => {
     if (!activeModal) return; // !activemodal=!effect
@@ -127,7 +133,7 @@ function App({ children }) {
           weather: item.weather,
         });
         // setNewItem(item.name, item.imageUrl, item.weather, jwt); // Spread... creates a shallow copy of array for addedItem to be appended to
-        setClothingItems([item, ...clothingItems]);
+        setClothingItems([item, ...clothingItems]); // updating state with new item
         setIsLoading(false);
         console.log(item);
         handleCloseModal();
@@ -144,6 +150,8 @@ function App({ children }) {
         setClothingItems((clothingItems) =>
           clothingItems.filter((item) => item._id !== _id)
         );
+        console.log("DELETED ITEM");
+
         setIsLoading(false);
         handleCloseModal();
       })
@@ -154,31 +162,55 @@ function App({ children }) {
     setActiveModal("register-user");
   };
 
-  const handleRegistration = ({ email, password, name, avatarUrl }) => {
+  const handleRegistration = ({ email, password, name, avatar }) => {
     setIsLoading(true);
+    if (!email || !password || !name || !avatar) {
+      return;
+    }
     const jwt = setToken();
-    register(email, password, name, avatarUrl, jwt)
+    register(email, password, name, avatar, jwt)
       .then((data) => {
-        console.log("handle registration App.jsx activated", data);
-        handleCloseModal();
+        if (data) {
+          console.log("handle registration App.jsx activated", data);
+          console.log("REGISTERING WORKING");
+
+          setCurrentUser(data);
+
+          setIsLoggedIn(true);
+          handleCloseModal();
+        }
       })
+
       .catch(console.error)
       .finally(() => setIsLoading(false));
   };
 
   const handleLogin = ({ email, password }) => {
     if (!email || !password) {
+      console.log("missing info");
       return;
     }
-    const jwt = getToken();
+    const token = getToken();
     authorize(email, password)
       .then((data) => {
-        if (data.jwt) {
-          setToken(data.jwt); // save token to local storage!
-          setUserData(data.user); // save user's data to state
-          setIsLoggedIn(true); // log the user in
+        if (data.token) {
+          setToken(data.token); // Save token to local storage
+          console.log(data);
+          // Fetch the user information using the token
+          return api.getUserInfo(data.token);
         }
+        throw new Error("JWT not received");
       })
+      .then(({ name, email, avatar, _id }) => {
+        // Set the current user with the fetched data
+        setCurrentUser({ name, email, avatar, _id });
+        setIsLoggedIn(true);
+        console.log("User data fetched:", { name, email, avatar, _id });
+        console.log("LOGGED IN WORKING");
+
+        handleCloseModal();
+      })
+
       .catch(console.error);
   };
 
@@ -198,6 +230,10 @@ function App({ children }) {
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview");
+  };
+
+  const handleEditProfile = () => {
+    setActiveModal("edit-profile");
   };
 
   // useEffect(
@@ -226,16 +262,16 @@ function App({ children }) {
       .catch(console.error);
   }, []);
 
-  useEffect(() => {
-    getClothingItems()
-      .then((data) => {
-        setClothingItems(data);
-      })
-      .catch(console.error);
-  }, []);
+  // useEffect(() => {
+  //   getClothingItems()
+  //     .then((data) => {
+  //       setClothingItems(data);
+  //     })
+  //     .catch(console.error);
+  // }, []);
 
   return (
-    <CurrentUserContext.Provider>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <CurrentTempUnitContext.Provider
           value={{ currentTempUnit, handleToggleSwitchChange }}
@@ -247,6 +283,7 @@ function App({ children }) {
               handleAddClick={handleAddClick}
               handleAddItem={handleAddItem}
               weatherData={weatherData}
+              isLoggedIn={isLoggedIn}
             />
 
             <Routes>
@@ -265,7 +302,6 @@ function App({ children }) {
                 element={
                   // <ProtectedRoute isLoggedIn={isLoggedIn}>
                   <Profile
-                    userData={userData}
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     handleAddClick={handleAddClick}
@@ -329,6 +365,15 @@ function App({ children }) {
               handleCloseModal={handleCloseModal}
               handleCardClick={handleCardClick}
               handleDeleteItem={handleDeleteItem}
+            />
+          )}
+
+          {activeModal === "edit-profile" && (
+            <ItemModal
+              isOpen={activeModal === "preview"}
+              handleCloseModal={handleCloseModal}
+              handleCardClick={handleCardClick}
+              handleEditProfile={handleEditProfile}
             />
           )}
         </CurrentTempUnitContext.Provider>

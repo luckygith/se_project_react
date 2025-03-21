@@ -13,7 +13,7 @@ const RegisterUserModal = ({
     email: "",
     password: "",
     name: "",
-    avatarUrl: "",
+    avatar: "",
   });
 
   const handleChange = (e) => {
@@ -78,19 +78,23 @@ const RegisterUserModal = ({
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="avatarUrl" className="modal__label">
+      <label htmlFor="avatar" className="modal__label">
         Avatar URL{" "}
         <input
           type="text"
           className="modal__input"
-          id="avatarUrl"
-          name="avatarUrl"
+          id="avatar"
+          name="avatar"
           placeholder="Avatar URL"
-          value={data.avatarUrl}
+          value={data.avatar}
           onChange={handleChange}
         />
       </label>
-      <div className="modal__button-container">
+
+      <div className="modal__buttons-container">
+        <button type="submit" className="modal__form-submit">
+          {isLoading ? "Signing Up" : "Sign Up"}
+        </button>
         <button
           type="button"
           className="modal__to-login"
