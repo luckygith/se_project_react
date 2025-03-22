@@ -34,6 +34,20 @@ export const getUserInfo = (token) => {
   });
 };
 
+export const editUserInfo = (name, avatar, token) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  });
+};
+
 // const requestApi = (url, options = {}) => {
 //   return fetch(url, options)
 //     .then((res) => (res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)))

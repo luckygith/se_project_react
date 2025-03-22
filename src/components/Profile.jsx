@@ -9,11 +9,12 @@ function Profile({
   handleAddClick,
   clothingItems,
   handleCloseModal,
+  handleEditProfileClick,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar />
+        <SideBar handleEditProfileClick={handleEditProfileClick} handleC />
       </section>
       <section className="profile__clothes-section">
         <ClothesSection

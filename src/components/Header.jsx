@@ -12,7 +12,6 @@ function Header({
   handleLoginClick,
   handleRegisterClick,
   weatherData,
-  isLoggedIn,
 }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",

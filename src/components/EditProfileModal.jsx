@@ -5,7 +5,7 @@ import useForm from "../hooks/useForm";
 const EditProfileModal = ({
   handleCloseModal,
   isOpen,
-  handleAddItem,
+handleEditProfile
   isLoading,
 }) => {
   const { values, handleChange, setValues } = useForm({

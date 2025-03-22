@@ -31,7 +31,8 @@ import { clothingItems } from "../utils/clothingItems";
 import {
   getClothingItems,
   addClothingItem, //called Line 60?
-  deleteClothingItem, //called Line 83?
+  deleteClothingItem,
+  editUserInfo, //called Line 83?
 } from "../utils/api";
 
 import { api } from "../utils/api";
@@ -141,6 +142,11 @@ function App({ children }) {
       .catch(console.error);
   };
 
+  const handleConfirmDeleteClick = (e) => {
+    e.preventDefault();
+    setActiveModal("confirm-delete");
+  };
+
   const handleDeleteItem = (_id) => {
     setIsLoading(true);
     const jwt = getToken();
@@ -232,8 +238,21 @@ function App({ children }) {
     setActiveModal("preview");
   };
 
-  const handleEditProfile = () => {
+  const handleEditProfileClick = () => {
     setActiveModal("edit-profile");
+  };
+
+  const handleEditProfile = ({ name, avatar }) => {
+    const token = getToken();
+    editUserInfo(name, avatar).then((data) => {
+      if (data) {
+        console.log("EDITPROFILE App.jsx activated", data);
+        console.log("EDIT PROFILE WORKING");
+        setCurrentUser(data);
+        setIsLoggedIn(true);
+        handleCloseModal();
+      }
+    });
   };
 
   // useEffect(
@@ -307,6 +326,7 @@ function App({ children }) {
                     handleAddClick={handleAddClick}
                     clothingItems={clothingItems}
                     handleCloseModal={handleCloseModal}
+                    handleEditProfileClick={handleEditProfileClick}
                   />
                   // </ProtectedRoute>
                 }
@@ -364,16 +384,26 @@ function App({ children }) {
               card={selectedCard}
               handleCloseModal={handleCloseModal}
               handleCardClick={handleCardClick}
-              handleDeleteItem={handleDeleteItem}
+              handleConfirmDeleteClick={handleConfirmDeleteClick}
             />
           )}
 
           {activeModal === "edit-profile" && (
             <ItemModal
-              isOpen={activeModal === "preview"}
+              isOpen={activeModal === "edit-profile"}
               handleCloseModal={handleCloseModal}
               handleCardClick={handleCardClick}
               handleEditProfile={handleEditProfile}
+            />
+          )}
+
+          {activeModal === "confirm-delete" && (
+            <ItemModal
+              isOpen={activeModal === "confirm-delete"}
+              handleCloseModal={handleCloseModal}
+              handleCardClick={handleCardClick}
+              handleDeleteItem={handleDeleteItem}
+              handleConfirmDeleteModal={handleConfirmDeleteClick}
             />
           )}
         </CurrentTempUnitContext.Provider>
