@@ -245,20 +245,21 @@ function App({ children }) {
 
   const handleEditProfile = ({ name, avatar }) => {
     const token = getToken();
-    editUserInfo(name, avatar).then((data) => {
-      if (data) {
-        console.log("EDITPROFILE App.jsx activated", data);
+    editUserInfo(name, avatar, token).then((data) => {
+      if (data.token) {
+        console.log(name, avatar);
         console.log("EDIT PROFILE WORKING");
         setCurrentUser(data);
         setIsLoggedIn(true);
-        handleCloseModal();
       }
+      handleCloseModal();
     });
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = (token) => {
     setIsLoggedIn(false);
-    token.removeToken();
+    setCurrentUser({});
+    removeToken(token);
   };
   // useEffect(
   //   (item) => {

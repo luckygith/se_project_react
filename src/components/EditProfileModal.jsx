@@ -1,6 +1,7 @@
 import React from "react";
 import ModalWithForm from "./ModalWithForm";
 import useForm from "../hooks/useForm";
+import { useState } from "react";
 
 const EditProfileModal = ({
   handleCloseModal,
@@ -8,14 +9,30 @@ const EditProfileModal = ({
   handleEditProfile,
   isLoading,
 }) => {
-  const { values, handleChange, setValues } = useForm({
+  //   const { name, avatar, token, setValues } = useForm({
+  //     name: "",
+  //     avatar: "",
+  //   });
+
+  const [data, setData] = useState({
     name: "",
     avatar: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleEditProfile({ name, avatar });
+    handleEditProfile(data);
+    console.log({ name, avatar });
+    console.log(data.name, data.avatar);
+    console.log(name, avatar);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (

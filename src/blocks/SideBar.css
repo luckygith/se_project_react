@@ -13,6 +13,7 @@
 .sidebar__profile {
   display: flex;
   flex-direction: row;
+  margin-bottom: 24px;
 }
 
 .sidebar__avatar {
@@ -30,8 +31,14 @@
 .sidebar__buttons {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .sidebar__button {
   border: none;
+  display: flex;
+  justify-content: flex-start;
+  background-color: none;
+  padding: 0;
+  margin: 0;
 }
