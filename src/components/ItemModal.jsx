@@ -6,11 +6,13 @@ function ItemModal({
   isOpen,
   card,
   handleCloseModal,
-  handleConfirmDeleteModal,
+  handleConfirmDeleteClick,
+
   isLoading,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner === currentUser._id;
+  console.log(card);
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
@@ -29,10 +31,12 @@ function ItemModal({
           </div>
           {isOwn && (
             <button
-              onClick={() => handleConfirmDeleteModal(card._id)}
+              onClick={() => handleConfirmDeleteClick(card._id)}
               type="button"
               className="modal__confirm-delete-button"
-            ></button>
+            >
+              Delete item
+            </button>
           )}
         </div>
       </div>

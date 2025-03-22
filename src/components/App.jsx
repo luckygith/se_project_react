@@ -19,7 +19,7 @@ import ItemModal from "./ItemModal";
 import Footer from "./Footer";
 
 import ProtectedRoute from "./ProtectedRoute";
-import { setToken, getToken } from "../utils/token";
+import { setToken, getToken, removeToken } from "../utils/token";
 
 import { getWeather, filterWeatherData } from "../utils/weatherApi";
 import { coordinates, APIkey } from "../utils/constants";
@@ -38,6 +38,8 @@ import {
 import { api } from "../utils/api";
 import RegisterUserModal from "./RegisterUserModal";
 import LoginUserModal from "./LoginUserModal";
+import EditProfileModal from "./EditProfileModal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 function App({ children }) {
   const [weatherData, setWeatherData] = useState({
@@ -142,8 +144,7 @@ function App({ children }) {
       .catch(console.error);
   };
 
-  const handleConfirmDeleteClick = (e) => {
-    e.preventDefault();
+  const handleConfirmDeleteClick = () => {
     setActiveModal("confirm-delete");
   };
 
@@ -255,6 +256,10 @@ function App({ children }) {
     });
   };
 
+  const handleLogOut = () => {
+    setIsLoggedIn(false);
+    token.removeToken();
+  };
   // useEffect(
   //   (item) => {
   //     console.log(item);
@@ -327,6 +332,7 @@ function App({ children }) {
                     clothingItems={clothingItems}
                     handleCloseModal={handleCloseModal}
                     handleEditProfileClick={handleEditProfileClick}
+                    handleLogOut={handleLogOut}
                   />
                   // </ProtectedRoute>
                 }
@@ -389,7 +395,7 @@ function App({ children }) {
           )}
 
           {activeModal === "edit-profile" && (
-            <ItemModal
+            <EditProfileModal
               isOpen={activeModal === "edit-profile"}
               handleCloseModal={handleCloseModal}
               handleCardClick={handleCardClick}
@@ -398,12 +404,13 @@ function App({ children }) {
           )}
 
           {activeModal === "confirm-delete" && (
-            <ItemModal
+            <ConfirmDeleteModal
               isOpen={activeModal === "confirm-delete"}
               handleCloseModal={handleCloseModal}
               handleCardClick={handleCardClick}
               handleDeleteItem={handleDeleteItem}
               handleConfirmDeleteModal={handleConfirmDeleteClick}
+              card={selectedCard}
             />
           )}
         </CurrentTempUnitContext.Provider>

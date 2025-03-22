@@ -27,6 +27,17 @@
 }
 .modal__footer-detail {
 }
+
+.modal__confirm-delete-button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: red;
+  background-color: white;
+  display: flex;
+  align-items: start;
+}
+
 .modal__delete-button {
   border: none;
   margin: 0;
