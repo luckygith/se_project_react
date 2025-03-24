@@ -19,7 +19,10 @@ function Header({
   });
 
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser);
+
+  const isLoggedIn = currentUser && currentUser.name;
+  // const isOwn = card.owner === currentUser._id;
+
   return (
     <header className="header">
       <Link to="/">
@@ -31,28 +34,36 @@ function Header({
       <div className="header__toggle">
         <ToggleSwitch />
       </div>
-      <button
-        onClick={handleAddClick}
-        type="button"
-        className="header__add-clothes-button"
-      >
-        + Add clothes
-      </button>
 
-      <button
-        onClick={handleLoginClick}
-        type="button"
-        className="header__login-button"
-      >
-        Login
-      </button>
-      <button
-        onClick={handleRegisterClick}
-        type="button"
-        className="header__sign-up-button"
-      >
-        Sign Up
-      </button>
+      {isLoggedIn && (
+        <button
+          onClick={handleAddClick}
+          type="button"
+          className="header__add-clothes-button"
+        >
+          + Add clothes
+        </button>
+      )}
+
+      {!isLoggedIn && (
+        <>
+          <button
+            onClick={handleLoginClick}
+            type="button"
+            className="header__login-button"
+          >
+            Login
+          </button>
+
+          <button
+            onClick={handleRegisterClick}
+            type="button"
+            className="header__sign-up-button"
+          >
+            Sign Up
+          </button>
+        </>
+      )}
 
       {/* <Link className="header__link">
         <div className="header__anonymous-user-container">

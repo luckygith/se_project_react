@@ -12,7 +12,6 @@ function ItemModal({
 }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner === currentUser._id;
-  console.log(card);
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>

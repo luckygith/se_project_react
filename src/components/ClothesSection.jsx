@@ -8,9 +8,10 @@ function ClothesSection({
   clothingItems,
   handleCardClick,
   handleAddClick,
-  selectedCard,
+  // selectedCard,
 }) {
   const currentUser = useContext(CurrentUserContext);
+  const isLoggedIn = currentUser && currentUser.name; // Check if user exists
 
   const isOwnClothingItems = clothingItems.filter(
     (item) => item.owner === currentUser._id

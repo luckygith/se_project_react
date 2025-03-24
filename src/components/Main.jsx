@@ -2,11 +2,17 @@ import WeatherCard from "./WeatherCard";
 import ItemCard from "./ItemCard";
 import "../blocks/Main.css";
 import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
-// import { clothingItems } from "../../../utils/clothingItems";
-
+import { clothingItems } from "../utils/clothingItems";
 function Main({ weatherData, handleCardClick, clothingItems }) {
+  const currentUser = useContext(CurrentUserContext);
+
   const { currentTempUnit } = useContext(CurrentTempUnitContext);
+
+  const isOwnClothingItems = clothingItems.filter(
+    (item) => item.owner === currentUser._id
+  );
 
   return (
     <main>
@@ -17,7 +23,7 @@ function Main({ weatherData, handleCardClick, clothingItems }) {
           You may want to wear:
         </p>
         <ul className="cards__list">
-          {clothingItems.map((item) => {
+          {isOwnClothingItems.map((item) => {
             if (item.weather === weatherData.type)
               return (
                 <ItemCard

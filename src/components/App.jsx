@@ -278,6 +278,8 @@ function App({ children }) {
   //   console.log(currentTempUnit);
   // };
 
+  // useEFFECTS
+
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -286,14 +288,6 @@ function App({ children }) {
       })
       .catch(console.error);
   }, []);
-
-  // useEffect(() => {
-  //   getClothingItems()
-  //     .then((data) => {
-  //       setClothingItems(data);
-  //     })
-  //     .catch(console.error);
-  // }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
