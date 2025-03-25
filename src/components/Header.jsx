@@ -77,9 +77,9 @@ function Header({
       </Link> */}
       <Link className="header__link" to="/profile">
         <div className="header__user-container">
-          <p className="header__username">{currentUser.name}</p>
+          {isLoggedIn && <p className="header__username">{currentUser.name}</p>}
           <img
-            src={currentUser.avatar}
+            src={isLoggedIn && currentUser.avatar ? currentUser.avatar : avatar}
             alt="user avatar image"
             className="header__username-avatar"
           />

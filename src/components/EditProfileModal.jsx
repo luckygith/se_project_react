@@ -9,11 +9,6 @@ const EditProfileModal = ({
   handleEditProfile,
   isLoading,
 }) => {
-  //   const { name, avatar, token, setValues } = useForm({
-  //     name: "",
-  //     avatar: "",
-  //   });
-
   const [data, setData] = useState({
     name: "",
     avatar: "",

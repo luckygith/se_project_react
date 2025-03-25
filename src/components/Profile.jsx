@@ -11,6 +11,7 @@ function Profile({
   handleCloseModal,
   handleEditProfileClick,
   handleLogOut,
+  handleCardLike,
 }) {
   return (
     <div className="profile">
@@ -26,6 +27,7 @@ function Profile({
           handleAddClick={handleAddClick}
           clothingItems={clothingItems}
           handleCloseModal={handleCloseModal}
+          onCardLike={handleCardLike}
         />
       </section>
     </div>

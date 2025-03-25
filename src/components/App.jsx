@@ -66,6 +66,8 @@ function App({ children }) {
     id: "",
   });
 
+  // useEffects
+
   useEffect(() => {
     const jwt = getToken();
 
@@ -123,6 +125,43 @@ function App({ children }) {
       document.removeEventListener("click", handleModalBackgroundClick);
     };
   }, [activeModal]);
+
+  // Handlers
+
+  const handleLogOut = (token) => {
+    setIsLoggedIn(false);
+    setCurrentUser({});
+    removeToken(token);
+  };
+
+  const handleCloseModal = () => {
+    setActiveModal("");
+  };
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    setActiveModal("preview");
+  };
+
+  const handleToggleSwitchChange = (e) => {
+    currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
+  };
+
+  useEffect(() => {
+    getWeather(coordinates, APIkey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  }, []);
+
+  // Handlers with Corresponding Functions
+
+  const handleAddClick = (e) => {
+    e.preventDefault();
+    setActiveModal("add-clothes");
+  };
 
   const handleAddItem = (item) => {
     setIsLoading(true);
@@ -192,6 +231,10 @@ function App({ children }) {
       .finally(() => setIsLoading(false));
   };
 
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+
   const handleLogin = ({ email, password }) => {
     if (!email || !password) {
       console.log("missing info");
@@ -221,24 +264,6 @@ function App({ children }) {
       .catch(console.error);
   };
 
-  const handleLoginClick = () => {
-    setActiveModal("login");
-  };
-
-  const handleAddClick = (e) => {
-    e.preventDefault();
-    setActiveModal("add-clothes");
-  };
-
-  const handleCloseModal = () => {
-    setActiveModal("");
-  };
-
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-    setActiveModal("preview");
-  };
-
   const handleEditProfileClick = () => {
     setActiveModal("edit-profile");
   };
@@ -256,38 +281,31 @@ function App({ children }) {
     });
   };
 
-  const handleLogOut = (token) => {
-    setIsLoggedIn(false);
-    setCurrentUser({});
-    removeToken(token);
+  const handleCardLike = ({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    // Check if this card is not currently liked
+    !isLiked
+      ? // if so, send a request to add the user's id to the card's likes array
+        api
+          // the first argument is the card's id
+          .addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.log(err))
+      : // if not, send a request to remove the user's id from the card's likes array
+        api
+          // the first argument is the card's id
+          .removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.log(err));
   };
-  // useEffect(
-  //   (item) => {
-  //     console.log(item);
-  //   },
-  //   [activeModal]
-  // );
-
-  const handleToggleSwitchChange = (e) => {
-    currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
-  };
-
-  //   {
-  //   if (currentTempUnit === "C") setCurrentTempUnit("F");
-  //   if (currentTempUnit === "F") setCurrentTempUnit("C");
-  //   console.log(currentTempUnit);
-  // };
-
-  // useEFFECTS
-
-  useEffect(() => {
-    getWeather(coordinates, APIkey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
-  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -313,6 +331,7 @@ function App({ children }) {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -328,22 +347,22 @@ function App({ children }) {
                     handleCloseModal={handleCloseModal}
                     handleEditProfileClick={handleEditProfileClick}
                     handleLogOut={handleLogOut}
+                    onCardLike={handleCardLike}
                   />
                   // </ProtectedRoute>
                 }
               />
-              <Route path="*" element={<p>PAGE NOT FOUND</p>} />
-              {/* 
-            <Route
-          path="*"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/ducks" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        /> */}
+
+              <Route
+                path="*"
+                element={
+                  isLoggedIn ? (
+                    <Navigate to="/" replace />
+                  ) : (
+                    <p>PAGE NOT FOUND</p>
+                  )
+                }
+              />
             </Routes>
             <Footer />
           </div>

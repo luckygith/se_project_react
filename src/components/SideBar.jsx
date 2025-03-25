@@ -5,32 +5,37 @@ import "../blocks/SideBar.css";
 
 function SideBar({ handleEditProfileClick, handleLogOut }) {
   const currentUser = useContext(CurrentUserContext); // Use context here
-  console.log(currentUser);
+  const isLoggedIn = currentUser && currentUser.name;
+
   return (
     <div className="sidebar">
       <div className="sidebar__profile">
         <img
           className="sidebar__avatar"
-          src={currentUser.avatar}
+          src={isLoggedIn && currentUser.avatar ? currentUser.avatar : avatar}
           alt="Default avatar"
         />
-        <p className="sidebar__username">{currentUser.name}</p>
+        {isLoggedIn && <p className="sidebar__username">{currentUser.name}</p>}
       </div>
       <div className="sidebar__buttons">
-        <button
-          onClick={handleEditProfileClick}
-          type="button"
-          className="sidebar__edit-profile sidebar__button"
-        >
-          Change Profile Data
-        </button>
-        <button
-          onClick={handleLogOut}
-          type="button"
-          className="sidebar__log-out sidebar__button"
-        >
-          Log out
-        </button>
+        {isLoggedIn && (
+          <>
+            <button
+              onClick={handleEditProfileClick}
+              type="button"
+              className="sidebar__edit-profile sidebar__button"
+            >
+              Change Profile Data
+            </button>
+            <button
+              onClick={handleLogOut}
+              type="button"
+              className="sidebar__log-out sidebar__button"
+            >
+              Log out
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -5,11 +5,16 @@
   justify-content: center;
 }
 
-.card__name {
+.card__header {
   position: absolute;
   top: 15px;
   text-align: center;
-  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.card__name {
   width: 73px;
   height: 24px;
   margin: 0;
@@ -29,6 +34,10 @@
   object-fit: scale-down;
 }
 
+.card__like {
+  height: 15px;
+  width: 18px;
+}
 @media screen and (max-width: 600px) {
   .card {
     max-width: 164px;
