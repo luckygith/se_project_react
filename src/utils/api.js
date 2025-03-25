@@ -90,9 +90,35 @@ export function deleteClothingItem(_id, token) {
     });
 }
 
+export function addCardLike(_id, token) {
+  return fetch(`${baseUrl}/items/${_id}/likes`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(checkResponse)
+    .then((data) => {
+      console.log("like function success:", _id);
+      return data;
+    });
+}
+
+export function removeCardLike(_id, token) {
+  return fetch(`${baseUrl}/items/${_id}/likes`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(checkResponse)
+    .then((data) => {
+      console.log("like function success:", _id);
+      return data;
+    });
+}
+
 export const api = {
   getClothingItems,
   addClothingItem,
   deleteClothingItem,
   getUserInfo,
+  addCardLike,
+  removeCardLike,
 };

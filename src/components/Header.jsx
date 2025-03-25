@@ -44,7 +44,6 @@ function Header({
           + Add clothes
         </button>
       )}
-
       {!isLoggedIn && (
         <>
           <button
@@ -64,7 +63,6 @@ function Header({
           </button>
         </>
       )}
-
       {/* <Link className="header__link">
         <div className="header__anonymous-user-container">
           <p className="header__login-button">Login</p>
@@ -77,12 +75,16 @@ function Header({
       </Link> */}
       <Link className="header__link" to="/profile">
         <div className="header__user-container">
-          {isLoggedIn && <p className="header__username">{currentUser.name}</p>}
-          <img
-            src={isLoggedIn && currentUser.avatar ? currentUser.avatar : avatar}
-            alt="user avatar image"
-            className="header__username-avatar"
-          />
+          {isLoggedIn && (
+            <>
+              <p className="header__username">{currentUser.name}</p>
+              <img
+                src={currentUser.avatar}
+                alt="user avatar image"
+                className="header__username-avatar"
+              />
+            </>
+          )}
         </div>
       </Link>
     </header>

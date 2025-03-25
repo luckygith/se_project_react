@@ -32,7 +32,9 @@ import {
   getClothingItems,
   addClothingItem, //called Line 60?
   deleteClothingItem,
-  editUserInfo, //called Line 83?
+  editUserInfo,
+  addCardLike,
+  removeCardLike, //called Line 83?
 } from "../utils/api";
 
 import { api } from "../utils/api";
@@ -80,6 +82,10 @@ function App({ children }) {
           setCurrentUser({ name, email, avatar, _id });
           console.log(jwt, name, email, avatar, _id);
         })
+        // .then((items) => {
+        //   console.log("Fetched items with likes:", items);
+        //   setClothingItems(items); // Update clothing items state
+        // })
         .catch(console.error);
     }
   }, []);
@@ -281,30 +287,37 @@ function App({ children }) {
     });
   };
 
-  const handleCardLike = ({ id, isLiked }) => {
-    const token = localStorage.getItem("jwt");
+  const handleCardLike = ({ _id, isLiked }) => {
+    // const token = localStorage.getItem("jwt");
+    const jwt = getToken();
     // Check if this card is not currently liked
     !isLiked
       ? // if so, send a request to add the user's id to the card's likes array
         api
           // the first argument is the card's id
-          .addCardLike(id, token)
+          .addCardLike(_id, jwt)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
+              cards.map((item) => (item._id === _id ? updatedCard : item))
             );
+            // setIsLiked(true);
           })
-          .catch((err) => console.log(err))
+          .catch((err) =>
+            console.log("Unsuccessful request to like item:", err)
+          )
       : // if not, send a request to remove the user's id from the card's likes array
         api
           // the first argument is the card's id
-          .removeCardLike(id, token)
+          .removeCardLike(_id, jwt)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
+              cards.map((item) => (item._id === _id ? updatedCard : item))
             );
+            // setIsLiked(false);
           })
-          .catch((err) => console.log(err));
+          .catch((err) =>
+            console.log("Unsuccessful request to unlike item:", err)
+          );
   };
 
   return (
@@ -331,7 +344,7 @@ function App({ children }) {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
-                    onCardLike={handleCardLike}
+                    handleCardLike={handleCardLike}
                   />
                 }
               />

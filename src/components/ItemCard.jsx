@@ -1,9 +1,14 @@
 import "../blocks/ItemCard.css";
-import likeButton from "../assets/likeButton.svg";
+import { useState } from "react";
+import likedButton from "../assets/likeButton.svg";
+import likesButton from "../assets/likesButton.svg";
 
 function ItemCard({ item, handleCardClick, handleCardLike }) {
-  function handleLike(data) {
-    handleCardLike(data);
+  const [isLiked, setIsLiked] = useState(item.isLiked || false);
+
+  function handleLike(item) {
+    setIsLiked(!isLiked);
+    handleCardLike(item);
   }
 
   return (
@@ -12,9 +17,9 @@ function ItemCard({ item, handleCardClick, handleCardLike }) {
         <h2 className="card__name">{item.name}</h2>
         <img
           onClick={() => handleLike(item)}
-          src={likeButton}
-          alt="heart button"
-          className="card__like"
+          src={isLiked ? likedButton : likesButton}
+          alt="like button"
+          className={isLiked ? "card__liked-button" : "card__like-button"}
         />
       </div>
       <img

@@ -31,7 +31,7 @@ function Main({ weatherData, handleCardClick, clothingItems, handleCardLike }) {
                   key={item._id}
                   item={item}
                   handleCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
+                  handleCardLike={handleCardLike}
                 />
               );
           })}

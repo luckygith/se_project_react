@@ -34,11 +34,14 @@
   object-fit: scale-down;
 }
 
-.card__like {
+.card__like-button .card__liked-button {
   height: 15px;
   width: 18px;
+  background-color: blueviolet;
+  border: none;
 }
-@media screen and (max-width: 600px) {
+
+. @media screen and (max-width: 600px) {
   .card {
     max-width: 164px;
     max-height: 164px;
