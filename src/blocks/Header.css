@@ -32,7 +32,7 @@
 }
 
 .header__username {
-  margin: 0;
+  margin: 0 0 0 20px;
 }
 
 .header__username-avatar {

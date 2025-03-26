@@ -67,6 +67,7 @@ function App({ children }) {
     weather: "",
     id: "",
   });
+  const [isLiked, setIsLiked] = useState(false);
 
   // useEffects
 
@@ -96,6 +97,7 @@ function App({ children }) {
       .then((data) => {
         console.log("getClothing items fetched data:", data); // setClothingItems(data);
         setClothingItems(data); // Update state with the fetched items
+        return api.getClothingItems(); // Fetch clothing items after user data
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
@@ -287,37 +289,50 @@ function App({ children }) {
     });
   };
 
-  const handleCardLike = ({ _id, isLiked }) => {
-    // const token = localStorage.getItem("jwt");
+  const handleCardLike = ({ _id, likes }) => {
     const jwt = getToken();
-    // Check if this card is not currently liked
-    !isLiked
-      ? // if so, send a request to add the user's id to the card's likes array
-        api
-          // the first argument is the card's id
-          .addCardLike(_id, jwt)
-          .then((updatedCard) => {
-            setClothingItems((cards) =>
-              cards.map((item) => (item._id === _id ? updatedCard : item))
-            );
-            // setIsLiked(true);
-          })
-          .catch((err) =>
-            console.log("Unsuccessful request to like item:", err)
-          )
-      : // if not, send a request to remove the user's id from the card's likes array
-        api
-          // the first argument is the card's id
-          .removeCardLike(_id, jwt)
-          .then((updatedCard) => {
-            setClothingItems((cards) =>
-              cards.map((item) => (item._id === _id ? updatedCard : item))
-            );
-            // setIsLiked(false);
-          })
-          .catch((err) =>
-            console.log("Unsuccessful request to unlike item:", err)
+
+    if (!isLiked) {
+      api
+        .addCardLike(_id, jwt, likes)
+        .then(() => {
+          setClothingItems((cards) =>
+            cards.map((item) =>
+              item._id === _id
+                ? { ...item, likes: [...likes, currentUser._id] } // Add the current user ID to likes
+                : item
+            )
           );
+          setIsLiked(true);
+        })
+
+        // .then((card) => {
+        //   setClothingItems((cards) => {
+        //     const updatedCards = cards.map((item) =>
+        //       item._id === _id ? card : item
+        //     );
+        //     localStorage.setItem("clothingItems", JSON.stringify(updatedCards)); // Save updated data
+        //     return updatedCards;
+        //   });
+        //   setIsLiked(isLiked);
+        // })
+        .catch((err) => console.log("Unsuccessful request to like item:", err));
+    } else {
+      api
+        .removeCardLike(_id, jwt, likes)
+        .then((card) => {
+          setClothingItems((cards) =>
+            cards.map((item) =>
+              item._id === _id
+                ? { ...item, likes: card?.likes || [] } // Using API response or fallback to []
+                : item
+            )
+          );
+        })
+        .catch((err) =>
+          console.log("Unsuccessful request to unlike item:", err)
+        );
+    }
   };
 
   return (

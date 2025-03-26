@@ -93,11 +93,14 @@ export function deleteClothingItem(_id, token) {
 export function addCardLike(_id, token) {
   return fetch(`${baseUrl}/items/${_id}/likes`, {
     method: "PUT",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
   })
     .then(checkResponse)
     .then((data) => {
-      console.log("like function success:", _id);
+      console.log("like function success:", _id, data);
       return data;
     });
 }
@@ -105,11 +108,14 @@ export function addCardLike(_id, token) {
 export function removeCardLike(_id, token) {
   return fetch(`${baseUrl}/items/${_id}/likes`, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
   })
     .then(checkResponse)
     .then((data) => {
-      console.log("like function success:", _id);
+      console.log("unlike function success:", _id, data);
       return data;
     });
 }

@@ -1,15 +1,30 @@
 import "../blocks/ItemCard.css";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import likedButton from "../assets/likeButton.svg";
 import likesButton from "../assets/likesButton.svg";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function ItemCard({ item, handleCardClick, handleCardLike }) {
-  const [isLiked, setIsLiked] = useState(item.isLiked || false);
+  // if currentUser._id is in item.likes, then isLiked = True
+  const currentUser = useContext(CurrentUserContext);
+  const [isLiked, setIsLiked] = useState(item.likes.includes(currentUser._id));
 
   function handleLike(item) {
     setIsLiked(!isLiked);
     handleCardLike(item);
   }
+
+  // useEffect(() => {
+  //   setIsLiked(item.likes.includes(currentUser._id));
+  // }, [clothingItems, item, currentUser._id]);
+
+  // function toggleLike(item) {
+  //   if (isLiked === true) {
+  //     setIsLiked(false);
+  //   } else {
+  //     setIsLiked(true);
+  //   }
+  // }
 
   return (
     <li className="card">
