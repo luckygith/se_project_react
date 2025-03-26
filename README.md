@@ -36,3 +36,11 @@ Form submission using controlled components or refs
 
 ![Delete added clothes function](image-3.png)
 ![Main and Profile Route cards overflow](image-4.png)
+
+third phase:
+
+My goal for this phase is to implement authentication and authorization working with React front-end and backend functionality by implementing:
+protection routes, registration, log-in, and user token features.
+
+LINK TO BACKEND:
+https://github.com/luckygith/se_project_express.git
