@@ -1,30 +1,45 @@
 import React from "react";
 import ModalWithForm from "./ModalWithForm";
 import useForm from "../hooks/useForm";
+import "../blocks/ConfirmDeleteModal.css";
 
 const ConfirmDeleteModal = ({
   handleCloseModal,
   isOpen,
   handleDeleteItem,
   isLoading,
+  card,
 }) => {
   return (
-    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
-      <div className="modal__content">
+    <div className={` modal ${isOpen ? "modal_opened" : ""}`}>
+      <div className="modal__content delete__modal-content">
+        <div className="delete__modal-content-textbox">
+          <p className="delete__modal-content-text">
+            Are you sure you want to delete this item?
+          </p>
+          <p className="delete__modal-content-text">
+            This action is irreversible.
+          </p>
+        </div>
         <button
           onClick={handleCloseModal}
           type="button"
-          className="modal__close"
+          className="delete__modal-close"
         ></button>
-        <div className="modal__footer">
+        <div className=" delete__modal-footer">
           <button
             onClick={() => handleDeleteItem(card._id)}
             type="button"
-            className="modal__delete-button"
+            className="delete__modal-confirm-delete"
           >
-            Yes, delete item {isLoading ? "Deleting item..." : "Delete item"}
+            {isLoading ? "Deleting item..." : "Yes, delete item"}
           </button>
-          <button onClick={handleCloseModal}>Cancel</button>
+          <button
+            className="delete__modal-cancel-button"
+            onClick={handleCloseModal}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>

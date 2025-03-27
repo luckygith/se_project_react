@@ -97,7 +97,6 @@ function App({ children }) {
       .then((data) => {
         console.log("getClothing items fetched data:", data); // setClothingItems(data);
         setClothingItems(data); // Update state with the fetched items
-        return api.getClothingItems(); // Fetch clothing items after user data
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
@@ -184,11 +183,13 @@ function App({ children }) {
         });
         // setNewItem(item.name, item.imageUrl, item.weather, jwt); // Spread... creates a shallow copy of array for addedItem to be appended to
         setClothingItems([item, ...clothingItems]); // updating state with new item
-        setIsLoading(false);
         console.log(item);
         handleCloseModal();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error, add item request unsuccessful", error);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleConfirmDeleteClick = () => {
@@ -204,12 +205,13 @@ function App({ children }) {
         setClothingItems((clothingItems) =>
           clothingItems.filter((item) => item._id !== _id)
         );
-        console.log("DELETED ITEM");
-
-        setIsLoading(false);
         handleCloseModal();
       })
-      .catch(console.error);
+
+      .catch((error) => {
+        console.error("Error, item deletion request unsuccessful", error);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleRegisterClick = () => {
@@ -226,16 +228,15 @@ function App({ children }) {
       .then((data) => {
         if (data) {
           console.log("handle registration App.jsx activated", data);
-          console.log("REGISTERING WORKING");
-
           setCurrentUser(data);
-
           setIsLoggedIn(true);
           handleCloseModal();
         }
       })
 
-      .catch(console.error)
+      .catch((error) => {
+        console.error("Error, registration request unsuccessful", error);
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -244,6 +245,7 @@ function App({ children }) {
   };
 
   const handleLogin = ({ email, password }) => {
+    setIsLoading(true);
     if (!email || !password) {
       console.log("missing info");
       return;
@@ -264,12 +266,12 @@ function App({ children }) {
         setCurrentUser({ name, email, avatar, _id });
         setIsLoggedIn(true);
         console.log("User data fetched:", { name, email, avatar, _id });
-        console.log("LOGGED IN WORKING");
-
         handleCloseModal();
       })
-
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error, login request unsuccessful", error);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleEditProfileClick = () => {
@@ -277,20 +279,28 @@ function App({ children }) {
   };
 
   const handleEditProfile = ({ name, avatar }) => {
+    setIsLoading(true);
     const token = getToken();
-    editUserInfo(name, avatar, token).then((data) => {
-      if (data.token) {
-        console.log(name, avatar);
-        console.log("EDIT PROFILE WORKING");
-        setCurrentUser(data);
-        setIsLoggedIn(true);
-      }
-      handleCloseModal();
-    });
+    editUserInfo(name, avatar, token)
+      .then((data) => {
+        if (data.token) {
+          console.log(name, avatar);
+          console.log("EDIT PROFILE WORKING");
+          setCurrentUser(data);
+          setIsLoggedIn(true);
+        }
+        handleCloseModal();
+      })
+      .catch((error) => {
+        console.error("Error, request to save changes unsuccessful:", error);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleCardLike = ({ _id, likes }) => {
     const jwt = getToken();
+
+    const isLiked = likes.includes(currentUser._id);
 
     if (!isLiked) {
       api
@@ -299,7 +309,7 @@ function App({ children }) {
           setClothingItems((cards) =>
             cards.map((item) =>
               item._id === _id
-                ? { ...item, likes: [...likes, currentUser._id] } // Add the current user ID to likes
+                ? { ...item, likes: [...likes, currentUser._id] } // Adding the current user ID to likes
                 : item
             )
           );
@@ -329,9 +339,9 @@ function App({ children }) {
             )
           );
         })
-        .catch((err) =>
-          console.log("Unsuccessful request to unlike item:", err)
-        );
+        .catch((error) => {
+          console.error("Error, request to like item unsuccessful:", error);
+        });
     }
   };
 
@@ -366,18 +376,18 @@ function App({ children }) {
               <Route
                 path="/profile"
                 element={
-                  // <ProtectedRoute isLoggedIn={isLoggedIn}>
-                  <Profile
-                    weatherData={weatherData}
-                    handleCardClick={handleCardClick}
-                    handleAddClick={handleAddClick}
-                    clothingItems={clothingItems}
-                    handleCloseModal={handleCloseModal}
-                    handleEditProfileClick={handleEditProfileClick}
-                    handleLogOut={handleLogOut}
-                    onCardLike={handleCardLike}
-                  />
-                  // </ProtectedRoute>
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      weatherData={weatherData}
+                      handleCardClick={handleCardClick}
+                      handleAddClick={handleAddClick}
+                      clothingItems={clothingItems}
+                      handleCloseModal={handleCloseModal}
+                      handleEditProfileClick={handleEditProfileClick}
+                      handleLogOut={handleLogOut}
+                      onCardLike={handleCardLike}
+                    />
+                  </ProtectedRoute>
                 }
               />
 

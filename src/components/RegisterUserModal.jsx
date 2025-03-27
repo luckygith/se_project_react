@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ModalWithForm from "./ModalWithForm";
 import useForm from "../hooks/useForm";
+import "../blocks/RegisterUserModal.css";
 
 const RegisterUserModal = ({
   handleCloseModal,
@@ -8,6 +9,7 @@ const RegisterUserModal = ({
   isLoading,
   handleRegistration,
   handleLoginClick,
+  buttonText,
 }) => {
   const [data, setData] = useState({
     email: "",
@@ -95,6 +97,7 @@ const RegisterUserModal = ({
         <button type="submit" className="modal__form-submit">
           {isLoading ? "Signing Up" : "Sign Up"}
         </button>
+
         <button
           type="button"
           className="modal__to-login"

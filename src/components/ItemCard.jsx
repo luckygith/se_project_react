@@ -10,21 +10,12 @@ function ItemCard({ item, handleCardClick, handleCardLike }) {
   const [isLiked, setIsLiked] = useState(item.likes.includes(currentUser._id));
 
   function handleLike(item) {
-    setIsLiked(!isLiked);
     handleCardLike(item);
   }
 
-  // useEffect(() => {
-  //   setIsLiked(item.likes.includes(currentUser._id));
-  // }, [clothingItems, item, currentUser._id]);
-
-  // function toggleLike(item) {
-  //   if (isLiked === true) {
-  //     setIsLiked(false);
-  //   } else {
-  //     setIsLiked(true);
-  //   }
-  // }
+  useEffect(() => {
+    setIsLiked(item.likes.includes(currentUser._id));
+  }, [item.likes, currentUser._id]);
 
   return (
     <li className="card">

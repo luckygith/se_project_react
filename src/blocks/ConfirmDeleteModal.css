@@ -1,0 +1,61 @@
+.delete__modal-content-textbox {
+  width: 367px;
+  height: 48px;
+
+  margin: 60px auto 40px auto;
+  padding: 0;
+  font-weight: 700;
+  font-size: 20px;
+}
+.delete__modal-content-text {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete__modal-content {
+  font-family: "CabinetGrotesk-Bold";
+  background-color: #ffffff;
+  max-width: 670px;
+  width: 100%;
+  position: relative;
+  max-width: 670px;
+  height: 280px;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.delete__modal-confirm-delete {
+  border: none;
+  background-color: #ffffff;
+  color: #ff4d00;
+}
+
+.delete__modal-cancel-button {
+  border: none;
+  background-color: #ffffff;
+}
+
+.delete__modal-footer {
+  display: flex;
+  font-family: "CabinetGrotesk-Bold";
+  padding: 0;
+  flex-direction: column;
+  line-height: 24px;
+  font-size: 20px;
+}
+.delete__modal-close {
+  height: 16px;
+  width: 16px;
+  background-image: url(../assets/close.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  border: none;
+  background-color: white;
+}

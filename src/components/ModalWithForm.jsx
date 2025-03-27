@@ -23,7 +23,10 @@ function ModalWithForm({
           <h3 className="modal__title">{title}</h3>
           <form className="modal__form" onSubmit={onSubmit}>
             {children}
-            <button type="submit" className="modal__form-submit">
+            <button
+              type="submit"
+              className="modal__form-submit register__modal-form-submit"
+            >
               {buttonText}
             </button>
           </form>

@@ -14,7 +14,7 @@ export const checkResponse = (res) => {
       const json = JSON.parse(text);
       if (res.ok) return json;
       throw new Error(`Error ${res.status}: ${json.message || res.status}`);
-    } catch (err) {
+    } catch (error) {
       // If it's not JSON, just return raw text or status message
       throw new Error(`Error ${res.status}: ${text || res.status}`);
     }
