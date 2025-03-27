@@ -77,11 +77,12 @@
   align-items: end;
 }
 
-.modal__to-login {
+.modal__to-login .modal__to-register {
   border: none;
   padding: 0;
   height: 40px;
   width: 80px;
+  display: flex;
 }
 
 .modal__input {
@@ -92,7 +93,9 @@
   width: 100%;
   margin: 8px 0 4px;
 }
-
+.modal__buttons-container {
+  display: flex;
+}
 .modal__radio-buttons {
   border: none;
   padding: 0;

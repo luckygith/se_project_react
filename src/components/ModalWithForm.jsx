@@ -1,4 +1,5 @@
 import "../blocks/ModalWithForm.css";
+import "../hooks/useForm";
 
 function ModalWithForm({
   children,
@@ -7,6 +8,8 @@ function ModalWithForm({
   isOpen,
   handleCloseModal,
   onSubmit,
+  isDisabled,
+  isLoading,
 }) {
   return (
     <div
@@ -23,12 +26,15 @@ function ModalWithForm({
           <h3 className="modal__title">{title}</h3>
           <form className="modal__form" onSubmit={onSubmit}>
             {children}
-            <button
-              type="submit"
-              className="modal__form-submit register__modal-form-submit"
-            >
-              {buttonText}
-            </button>
+            <div className="modal__buttons-container">
+              <button
+                type="submit"
+                className="modal__form-submit"
+                disabled={isLoading || isDisabled}
+              >
+                {buttonText}
+              </button>
+            </div>
           </form>
         </div>
       </div>

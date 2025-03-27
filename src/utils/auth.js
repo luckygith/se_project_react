@@ -1,4 +1,5 @@
 export const baseUrl = "http://localhost:3001";
+import { checkResponse } from "./api";
 
 export const register = (email, password, name, avatar) => {
   return fetch(`${baseUrl}/signup`, {
@@ -8,9 +9,7 @@ export const register = (email, password, name, avatar) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password, name, avatar }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 export const authorize = (email, password, token) => {
@@ -22,7 +21,5 @@ export const authorize = (email, password, token) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };

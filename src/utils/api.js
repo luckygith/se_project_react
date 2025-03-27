@@ -1,24 +1,11 @@
 const baseUrl = "http://localhost:3001";
 
-// export const checkResponse = (res) => {
-//   if (res.ok) {
-//     return res.json();
-//   } else {
-//     return Promise.reject(`Error: ${res.status}`);
-//   }
-// };
-
 export const checkResponse = (res) => {
-  return res.text().then((text) => {
-    try {
-      const json = JSON.parse(text);
-      if (res.ok) return json;
-      throw new Error(`Error ${res.status}: ${json.message || res.status}`);
-    } catch (error) {
-      // If it's not JSON, just return raw text or status message
-      throw new Error(`Error ${res.status}: ${text || res.status}`);
-    }
-  });
+  if (res.ok) {
+    return res.json();
+  } else {
+    return Promise.reject(`Error: ${res.status}`);
+  }
 };
 
 export const getUserInfo = (token) => {
@@ -29,9 +16,7 @@ export const getUserInfo = (token) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 export const editUserInfo = (name, avatar, token) => {
@@ -43,9 +28,7 @@ export const editUserInfo = (name, avatar, token) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
-  }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 // const requestApi = (url, options = {}) => {

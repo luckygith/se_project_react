@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ModalWithForm from "./ModalWithForm";
 import useForm from "../hooks/useForm";
+import "../blocks/LoginUserModal.css";
 
 const LoginUserModal = ({
   handleCloseModal,
@@ -9,28 +10,31 @@ const LoginUserModal = ({
   isLoading,
   handleRegisterClick,
 }) => {
-  const [data, setData] = useState({
+  const { values, handleChange, isDisabled } = useForm({
     email: "",
     password: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(data);
+    handleLogin(values);
   };
 
   const handleOrRegisterClick = () => {
-    handleCloseModal();
     handleRegisterClick();
   };
+
+  // const isDisabled = !data.email || !data.password; // Disable when empty
+
+  // <button
+  //   type="submit"
+  //   className={`modal__submit-button ${
+  //     isDisabled ? "modal__submit-button--disabled" : ""
+  //   }`}
+  //   disabled={isDisabled}
+  // >
+  //   {isLoading ? "Logging in..." : "Log In"}
+  // </button>;
 
   return (
     <ModalWithForm
@@ -48,7 +52,7 @@ const LoginUserModal = ({
           id="email"
           name="email"
           placeholder="Email"
-          value={data.email}
+          value={values.email}
           onChange={handleChange}
         />
       </label>
@@ -60,11 +64,18 @@ const LoginUserModal = ({
           id="password"
           name="password"
           placeholder="Password"
-          value={data.password}
+          value={values.password}
           onChange={handleChange}
         />
       </label>
       <div className="modal__button-container">
+        {/* <button
+          type="submit"
+          className="modal__form-submit"
+          disabled={isLoading || isDisabled}
+        >
+          {isLoading ? "Logging in" : "Log in"}
+        </button> */}
         <button
           type="button"
           className="modal__to-register"

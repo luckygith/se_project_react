@@ -11,28 +11,19 @@ const RegisterUserModal = ({
   handleLoginClick,
   buttonText,
 }) => {
-  const [data, setData] = useState({
+  const { values, handleChange, isDisabled } = useForm({
     email: "",
     password: "",
     name: "",
     avatar: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegistration(data);
+    handleRegistration(values);
   };
 
   const handleOrLoginClick = () => {
-    handleCloseModal();
     handleLoginClick();
   };
 
@@ -52,7 +43,7 @@ const RegisterUserModal = ({
           id="email"
           name="email"
           placeholder="Email"
-          value={data.email}
+          value={values.email}
           onChange={handleChange}
         />
       </label>
@@ -64,7 +55,7 @@ const RegisterUserModal = ({
           id="password"
           name="password"
           placeholder="Password"
-          value={data.password}
+          value={values.password}
           onChange={handleChange}
         />
       </label>
@@ -76,7 +67,7 @@ const RegisterUserModal = ({
           id="name"
           name="name"
           placeholder="Name"
-          value={data.name}
+          value={values.name}
           onChange={handleChange}
         />
       </label>
@@ -88,24 +79,26 @@ const RegisterUserModal = ({
           id="avatar"
           name="avatar"
           placeholder="Avatar URL"
-          value={data.avatar}
+          value={values.avatar}
           onChange={handleChange}
         />
       </label>
 
-      <div className="modal__buttons-container">
-        <button type="submit" className="modal__form-submit">
-          {isLoading ? "Signing Up" : "Sign Up"}
-        </button>
-
-        <button
-          type="button"
-          className="modal__to-login"
-          onClick={handleOrLoginClick}
+      {/* <button
+          type="submit"
+          className="modal__form-submit"
+          disabled={isLoading || isDisabled}
         >
-          or Login
-        </button>
-      </div>
+          {isLoading ? "Signing Up" : "Sign Up"}
+        </button> */}
+
+      <button
+        type="button"
+        className="modal__to-login"
+        onClick={handleOrLoginClick}
+      >
+        or Login
+      </button>
     </ModalWithForm>
   );
 };
