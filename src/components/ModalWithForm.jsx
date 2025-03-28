@@ -4,7 +4,6 @@ import "../hooks/useForm";
 function ModalWithForm({
   children,
   title,
-
   isOpen,
   handleCloseModal,
   onSubmit,

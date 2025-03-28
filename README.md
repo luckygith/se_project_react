@@ -26,6 +26,8 @@ Currently, two official plugins are available:
 ![add clothes popup](image-1.png)
 ![weather conditions](image-2.png)
 
+FIGMA DESIGN: https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=1-170&t=jOf4VV0ePuadhmch-0
+
 second phase:
 
 My goal for this iteration is to continue implementing functionality using the React features I have learned. I implement the following:
@@ -41,6 +43,13 @@ third phase:
 
 My goal for this phase is to implement authentication and authorization working with React front-end and backend functionality by implementing:
 protection routes, registration, log-in, and user token features.
+
+FIGMA DESIGN: https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=1-170&t=jOf4VV0ePuadhmch-0
+
+UI updates:
+![Log in UI](<Log in UI.jpg>)
+![Add item and profile edit UI](<Add Item and Profile Edit UI.jpg>)
+![general project features](<WTWR  features.jpg>)
 
 LINK TO BACKEND:
 https://github.com/luckygith/se_project_express.git

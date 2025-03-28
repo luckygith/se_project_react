@@ -90,7 +90,7 @@ function App({ children }) {
       .getClothingItems()
       .then((data) => {
         console.log("getClothing items fetched data:", data); // setClothingItems(data);
-        setClothingItems(data); // Update state with the fetched items
+        setClothingItems(data); // Updating state with the fetched items
       })
       .catch((error) => {
         console.error("Error fetching items: ", error);
@@ -104,18 +104,7 @@ function App({ children }) {
   useEffect(() => {
     if (!activeModal) return; // !activemodal=!effect
 
-    const handleEscapeClose = (e) => {
-      if (e.key === "Escape") {
-        handleCloseModal();
-      }
-    };
-
     // HANDLERS
-    const handleModalBackgroundClick = (e) => {
-      if (e.target.classList.contains("modal_opened")) {
-        handleCloseModal();
-      }
-    };
 
     document.addEventListener("keydown", handleEscapeClose);
     document.addEventListener("click", handleModalBackgroundClick);
@@ -128,15 +117,26 @@ function App({ children }) {
   }, [activeModal]);
 
   // Handlers
+  const handleModalBackgroundClick = (e) => {
+    if (e.target.classList.contains("modal_opened")) {
+      handleCloseModal();
+    }
+  };
+
+  const handleEscapeClose = (e) => {
+    if (e.key === "Escape") {
+      handleCloseModal();
+    }
+  };
+
+  const handleCloseModal = () => {
+    setActiveModal("");
+  };
 
   const handleLogOut = (token) => {
     setIsLoggedIn(false);
     setCurrentUser({});
     removeToken(token);
-  };
-
-  const handleCloseModal = () => {
-    setActiveModal("");
   };
 
   const handleCardClick = (card) => {
