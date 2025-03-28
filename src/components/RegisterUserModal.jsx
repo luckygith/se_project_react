@@ -83,22 +83,22 @@ const RegisterUserModal = ({
           onChange={handleChange}
         />
       </label>
-
-      {/* <button
+      <div className="modal__buttons-container">
+        <button
           type="submit"
           className="modal__form-submit"
           disabled={isLoading || isDisabled}
         >
           {isLoading ? "Signing Up" : "Sign Up"}
-        </button> */}
-
-      <button
-        type="button"
-        className="modal__to-login"
-        onClick={handleOrLoginClick}
-      >
-        or Login
-      </button>
+        </button>
+        <button
+          type="button"
+          className="modal__to-login"
+          onClick={handleOrLoginClick}
+        >
+          or Login
+        </button>
+      </div>
     </ModalWithForm>
   );
 };

@@ -91,6 +91,15 @@ const AddItemModal = ({
           />
           Cold
         </label>
+        <div className="modal__buttons-container">
+          <button
+            type="submit"
+            className="modal__form-submit"
+            disabled={isLoading || isDisabled}
+          >
+            Add item
+          </button>
+        </div>
       </fieldset>
     </ModalWithForm>
   );

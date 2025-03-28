@@ -39,7 +39,6 @@ const LoginUserModal = ({
   return (
     <ModalWithForm
       title="Login"
-      buttonText={isLoading ? "Logging in..." : "Log In"}
       handleCloseModal={handleCloseModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
@@ -68,14 +67,15 @@ const LoginUserModal = ({
           onChange={handleChange}
         />
       </label>
-      <div className="modal__button-container">
-        {/* <button
+
+      <div className="modal__buttons-container">
+        <button
           type="submit"
           className="modal__form-submit"
           disabled={isLoading || isDisabled}
         >
-          {isLoading ? "Logging in" : "Log in"}
-        </button> */}
+          {isLoading ? "Logging in..." : "Log In"}
+        </button>
         <button
           type="button"
           className="modal__to-register"

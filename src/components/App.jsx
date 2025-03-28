@@ -79,14 +79,8 @@ function App({ children }) {
         .getUserInfo(jwt)
         .then(({ name, email, avatar, _id }) => {
           setIsLoggedIn(true);
-
           setCurrentUser({ name, email, avatar, _id });
-          console.log(jwt, name, email, avatar, _id);
         })
-        // .then((items) => {
-        //   console.log("Fetched items with likes:", items);
-        //   setClothingItems(items); // Update clothing items state
-        // })
         .catch(console.error);
     }
   }, []);
@@ -376,7 +370,7 @@ function App({ children }) {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <ProtectedRoute>
                     <Profile
                       weatherData={weatherData}
                       handleCardClick={handleCardClick}
@@ -391,16 +385,7 @@ function App({ children }) {
                 }
               />
 
-              <Route
-                path="*"
-                element={
-                  isLoggedIn ? (
-                    <Navigate to="/" replace />
-                  ) : (
-                    <p>PAGE NOT FOUND</p>
-                  )
-                }
-              />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <Footer />
           </div>

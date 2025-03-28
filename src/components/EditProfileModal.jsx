@@ -10,35 +10,25 @@ const EditProfileModal = ({
   handleEditProfile,
   isLoading,
 }) => {
-  const [data, setData] = useState({
+  const { values, setValues, handleChange, isDisabled } = useForm({
     name: "",
     avatar: "",
   });
 
-  const { currentUser } = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (isOpen && currentUser) {
-      setData({
-        name: currentUser.name,
-        avatar: currentUser.avatar,
+      setValues({
+        name: currentUser.name || "",
+        avatar: currentUser.avatar || "",
       });
     }
-  }, [isOpen, currentUser]);
+  }, [isOpen, currentUser, setValues]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleEditProfile(data);
-    console.log({ name, avatar });
-    console.log(data.name, data.avatar);
-    console.log(name, avatar);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    handleEditProfile(values);
   };
 
   return (
@@ -56,8 +46,8 @@ const EditProfileModal = ({
           className="modal__input"
           id="name"
           name="name"
-          placeholder="Name"
-          value={data.name}
+          // placeholder="Name"
+          value={values.name}
           onChange={handleChange}
         />
       </label>
@@ -68,11 +58,18 @@ const EditProfileModal = ({
           className="modal__input"
           id="avatar"
           name="avatar"
-          placeholder="Avatar URL"
-          value={data.avatar}
+          // placeholder="Avatar URL"
+          value={values.avatar}
           onChange={handleChange}
         />
       </label>
+      <button
+        type="submit"
+        className="modal__form-submit"
+        disabled={isLoading || isDisabled}
+      >
+        {isLoading ? "Saving changes" : "Save changes"}
+      </button>
     </ModalWithForm>
   );
 };

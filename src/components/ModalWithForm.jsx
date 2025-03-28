@@ -4,12 +4,10 @@ import "../hooks/useForm";
 function ModalWithForm({
   children,
   title,
-  buttonText = "Add Clothes",
+
   isOpen,
   handleCloseModal,
   onSubmit,
-  isDisabled,
-  isLoading,
 }) {
   return (
     <div
@@ -26,15 +24,6 @@ function ModalWithForm({
           <h3 className="modal__title">{title}</h3>
           <form className="modal__form" onSubmit={onSubmit}>
             {children}
-            <div className="modal__buttons-container">
-              <button
-                type="submit"
-                className="modal__form-submit"
-                disabled={isLoading || isDisabled}
-              >
-                {buttonText}
-              </button>
-            </div>
           </form>
         </div>
       </div>

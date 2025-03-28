@@ -56,7 +56,6 @@
   border: none;
   border-radius: 4px;
   background-color: #0000004d;
-  margin-top: 32px;
 }
 
 .modal__form {
@@ -74,7 +73,8 @@
   padding: 0;
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: center;
+  margin-top: 32px;
 }
 
 .modal__to-login .modal__to-register {
@@ -104,7 +104,6 @@
 }
 
 .modal__legend {
-  margin-bottom: 12px;
 }
 
 .modal__label_type_radio {
