@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:3001";
+import { baseUrl } from "./constants";
 import { checkResponse } from "./api";
 
 export const register = (email, password, name, avatar) => {
