@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import ModalWithForm from "../components/ModalWithForm";
 import useForm from "../hooks/useForm";
 import "../blocks/AddItemModal.css";
@@ -9,7 +9,7 @@ const AddItemModal = ({
   handleAddItem,
   isLoading,
 }) => {
-  const { values, handleChange, setValues, isDisabled } = useForm({
+  const { values, handleChange, isDisabled } = useForm({
     //current state empty input values, handleChange updates when input changes
     name: "",
     imageUrl: "",

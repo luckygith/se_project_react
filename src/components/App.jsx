@@ -29,12 +29,9 @@ import Profile from "./Profile";
 import { clothingItems } from "../utils/clothingItems";
 
 import {
-  getClothingItems,
-  addClothingItem, //called Line 60?
-  deleteClothingItem,
+
   editUserInfo,
-  addCardLike,
-  removeCardLike, //called Line 83?
+
 } from "../utils/api";
 
 import { api } from "../utils/api";
