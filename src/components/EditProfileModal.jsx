@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import ModalWithForm from "./ModalWithForm";
 import useForm from "../hooks/useForm";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 const EditProfileModal = ({

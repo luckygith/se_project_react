@@ -1,6 +1,4 @@
-import React from "react";
-import ModalWithForm from "./ModalWithForm";
-import useForm from "../hooks/useForm";
+
 import "../blocks/ConfirmDeleteModal.css";
 
 const ConfirmDeleteModal = ({

@@ -4,7 +4,7 @@ import "../blocks/Main.css";
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
-import { clothingItems } from "../utils/clothingItems";
+
 
 function Main({ weatherData, handleCardClick, clothingItems, handleCardLike }) {
   const currentUser = useContext(CurrentUserContext);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import ModalWithForm from "./ModalWithForm";
 import useForm from "../hooks/useForm";
 import "../blocks/RegisterUserModal.css";
@@ -9,7 +9,7 @@ const RegisterUserModal = ({
   isLoading,
   handleRegistration,
   handleLoginClick,
-  buttonText,
+
 }) => {
   const { values, handleChange, isDisabled } = useForm({
     email: "",

@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import { useContext} from "react";
 
 import "../blocks/ToggleSwitch.css";
 
 import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
-const ToggleSwitch = (e) => {
+const ToggleSwitch = () => {
   const { currentTempUnit, handleToggleSwitchChange } = useContext(
     CurrentTempUnitContext
   );

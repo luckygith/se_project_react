@@ -1,7 +1,6 @@
 // import clear from "../../../../assets/day/clear.svg";
 import "../blocks/WeatherCard.css";
 import { weatherOptions, defaultWeatherOptions } from "../utils/constants";
-import { filterWeatherData } from "../utils/weatherApi";
 import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
 import { useContext } from "react";
 
