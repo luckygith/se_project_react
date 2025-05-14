@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect} from "react";
 import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
-  useLocation,
+
 } from "react-router-dom";
 
-import { AppContext } from "../contexts/AppContext";
+
+
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../blocks/App.css";
@@ -26,12 +26,10 @@ import { coordinates, APIkey } from "../utils/constants";
 import { CurrentTempUnitContext } from "../contexts/CurrentTempUnitContext";
 import AddItemModal from "./AddItemModal";
 import Profile from "./Profile";
-import { clothingItems } from "../utils/clothingItems";
+
 
 import {
-
   editUserInfo,
-
 } from "../utils/api";
 
 import { api } from "../utils/api";
@@ -40,7 +38,7 @@ import LoginUserModal from "./LoginUserModal";
 import EditProfileModal from "./EditProfileModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
-function App({ children }) {
+function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999 },
@@ -141,7 +139,7 @@ function App({ children }) {
     setActiveModal("preview");
   };
 
-  const handleToggleSwitchChange = (e) => {
+  const handleToggleSwitchChange = () => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
   };
 
@@ -306,17 +304,6 @@ function App({ children }) {
           );
           setIsLiked(true);
         })
-
-        // .then((card) => {
-        //   setClothingItems((cards) => {
-        //     const updatedCards = cards.map((item) =>
-        //       item._id === _id ? card : item
-        //     );
-        //     localStorage.setItem("clothingItems", JSON.stringify(updatedCards)); // Save updated data
-        //     return updatedCards;
-        //   });
-        //   setIsLiked(isLiked);
-        // })
         .catch((err) => console.log("Unsuccessful request to like item:", err));
     } else {
       api

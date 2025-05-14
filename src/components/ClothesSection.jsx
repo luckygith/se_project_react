@@ -1,5 +1,5 @@
 import ItemCard from "./ItemCard";
-import React from "react";
+
 import "../blocks/ClothesSection.css";
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -8,10 +8,9 @@ function ClothesSection({
   clothingItems,
   handleCardClick,
   handleAddClick,
-  // selectedCard,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const isLoggedIn = currentUser && currentUser.name; // Check if user exists
+  // const isLoggedIn = currentUser && currentUser.name; // Check if user exists
 
   const isOwnClothingItems = clothingItems.filter(
     (item) => item.owner === currentUser._id
@@ -49,10 +48,3 @@ function ClothesSection({
 
 export default ClothesSection;
 
-// {clothingItems.map((item) => (
-//   <ItemCard
-//     key={item._id} // Add a unique key for each item
-//     item={item}
-//     handleCardClick={handleCardClick}
-//   />
-// ))}
