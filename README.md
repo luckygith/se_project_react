@@ -1,6 +1,7 @@
 # “WTWR” (a near-acronym for "What to Wear")
+# SE_PROJECT_REACT - WTWR FRONT END APPLICATION
 
-Welcome to a project demonstration called WTWR!
+Welcome to a project demonstration called WTWR !
 
 first phase:
 
