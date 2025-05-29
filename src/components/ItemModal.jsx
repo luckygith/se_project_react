@@ -8,7 +8,6 @@ function ItemModal({
   handleCloseModal,
   handleConfirmDeleteClick,
 
-  isLoading,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner === currentUser._id;

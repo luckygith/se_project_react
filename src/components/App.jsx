@@ -62,7 +62,7 @@ function App() {
     weather: "",
     id: "",
   });
-  const [isLiked, setIsLiked] = useState(false);
+
 
   // useEffects
 
