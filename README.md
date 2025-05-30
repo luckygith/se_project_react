@@ -1,6 +1,11 @@
 # “WTWR” (a near-acronym for "What to Wear")
 # SE_PROJECT_REACT - WTWR FRONT END APPLICATION
 
+# DOMAIN NAME: bnene.com
+[api.wtwr.bnene.com](https://api.wtwr.bnene.com) 
+[wtwr.bnene.com](https://wtwr.bnene.com)
+[www.wtwr.bnene.com](https://www.wtwr.bnene.com)
+
 Welcome to a project demonstration called WTWR !
 
 first phase:
