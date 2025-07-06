@@ -1,23 +1,26 @@
 # “WTWR” (a near-acronym for "What to Wear")
+
 # SE_PROJECT_REACT - WTWR FRONT END APPLICATION
 
 # DOMAIN NAME: bnene.com
-[api.wtwr.bnene.com](https://api.wtwr.bnene.com) 
+
+[api.wtwr.bnene.com](https://api.wtwr.bnene.com)
 [wtwr.bnene.com](https://wtwr.bnene.com)
 [www.wtwr.bnene.com](https://www.wtwr.bnene.com)
 
-Welcome to a project demonstration called WTWR !
+Welcome to my project demonstration called WTWR !
 
 first phase:
 
 An application's front-end built from scratch excercising HTML, CSS, and Javascript with additonal functionality to the React front-end, serving the fundamentals of the javascript framework.
-I will also be exhibiting the core piece of the application's functionality: interaction with the weather API. Using the asynchronous fetch requests I learned in the previous sprint, I make requests to this API. The response will include location-specific weather data, which will be parsed and utilized to filter out clothing cards unsuitable for the current weather.
+I will also be exhibiting the core piece of the application's functionality: interaction with the weather API. Using the asynchronous fetch requests, I make requests to this API. The response will include location-specific weather data, which will be parsed and utilized to filter out clothing cards unsuitable for the current weather.
 
 Technologies and techniques used in this project includes:
--The basics of React
+-The basics of React and Redux
 -How to build React apps with Create React App
 -Modern React syntax, called hooks
 -Understanding and correctly using the this keyword
+-Authorization and authentication
 
 # React + Vite “WTWR” (a near-acronym for "What to Wear")
 
@@ -36,7 +39,7 @@ FIGMA DESIGN: https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTW
 
 second phase:
 
-My goal for this iteration is to continue implementing functionality using the React features I have learned. I implement the following:
+My goal for this iteration is to continue implementing functionality using the React features. I implement the following:
 
 A temperature unit toggle switch using React context
 A profile page route using React Router
