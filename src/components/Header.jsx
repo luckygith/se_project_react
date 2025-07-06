@@ -18,9 +18,8 @@ function Header({
   });
 
   const currentUser = useContext(CurrentUserContext);
-
   const isLoggedIn = currentUser && currentUser.name;
-  // const isOwn = card.owner === currentUser._id;
+  
 
   return (
     <header className="header">
