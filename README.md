@@ -145,6 +145,9 @@ Optimize images and components for even faster load times
 Back-End Repository: se_project_express
 Front-End Deployment: wtwr.bnene.com
 API Endpoint: api.wtwr.bnene.com
+
 Figma Design: WTWR Sprint 14
+https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=1-170&t=jOf4VV0ePuadhmch-0
+
 LINK TO BACKEND:
 https://github.com/luckygith/se_project_express.git
